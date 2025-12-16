@@ -1,0 +1,41 @@
+-----------------------------
+TETHER COMMANDS:
+-----------------------------
+/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts/stabAD.sh coupPPE.028
+-----------------------------
+TLAI_gridded 5.8545933 3.5 False
+TOTECOSYSC 0.07182922 0.3 True
+TOTVEGC 0.016143035 0.1 True
+GPP 0.0008903503 0.1 True
+FATAL: Your simulation is not in equilibrium, 8 hours have been deducted from your PTO bank, try again
+status: 11
+AD needs more spinup
+-----------------------------
+SUBMITTING /glade/u/home/bbuchovecky/projects/cpl_ppe_co2/sims/coupPPE.028/I1850Clm50Bgc.CPLHIST.historical.coupPPE.028.AD
+-----------------------------
+Creating component namelists
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/cime/src/components/data_comps/datm/cime_config/buildnml
+   ....  Obtaining DATM model domain info from first stream file: CPLHISTForcing.Solar
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/components/clm//cime_config/buildnml
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/cime/src/components/stub_comps/sice/cime_config/buildnml
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/cime/src/components/stub_comps/socn/cime_config/buildnml
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/components/mosart//cime_config/buildnml
+   Running /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/components/cism//cime_config/buildnml 
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/cime/src/components/stub_comps/swav/cime_config/buildnml
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/cime/src/components/stub_comps/sesp/cime_config/buildnml
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/cime/src/drivers/mct/cime_config/buildnml
+Finished creating component namelists
+Checking that inputdata is available as part of case submission
+Loading input file list: 'Buildconf/clm.input_data_list'
+Loading input file list: 'Buildconf/cpl.input_data_list'
+Loading input file list: 'Buildconf/datm.input_data_list'
+Loading input file list: 'Buildconf/cism.input_data_list'
+Loading input file list: 'Buildconf/mosart.input_data_list'
+Check case OK
+Submitting job script qsub -q main -l walltime=1:00:00 -A UWAS0155 -l job_priority=regular -v ARGS_FOR_SCRIPT='--completion-sets-continue-run' .case.run
+Submitted job id is 3941126.desched1
+Submitting job script qsub -q main -l walltime=0:20:00 -A UWAS0155 -l job_priority=regular  -W depend=afterok:3941126.desched1 -v ARGS_FOR_SCRIPT='' case.st_archive
+Submitted job id is 3941127.desched1
+Submitted job case.run with id 3941126.desched1
+Submitted job case.st_archive with id 3941127.desched1
+3941128.desched1

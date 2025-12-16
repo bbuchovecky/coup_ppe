@@ -1,1 +1,0 @@
-/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts/stabAD.sh coupPPE.028
