@@ -1,6 +1,8 @@
 """
 Docstring for coup_ppe.parallel.daskhelper
 """
+from __future__ import annotations
+
 import os
 import time
 import platform

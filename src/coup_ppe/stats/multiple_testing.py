@@ -1,6 +1,8 @@
 """
 Statistical utilities for performing multiple hypothesis tests.
 """
+from __future__ import annotations
+
 import numpy as np
 import xarray as xr
 

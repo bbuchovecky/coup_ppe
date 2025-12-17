@@ -1,6 +1,8 @@
 """
 Statistical regression utilities for xarray fields and NumPy arrays.
 """
+from __future__ import annotations
+
 import numpy as np
 import xarray as xr
 import scipy.stats as stats

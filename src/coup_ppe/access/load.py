@@ -19,25 +19,27 @@ formats and indexed by intake-esm catalogs. Support for derived variables and
 custom preprocessing functions is included.
 >>> from coup_ppe.access.load import load_ppe
 """
+from __future__ import annotations
+
 from typing import Callable
 import pathlib
 import xarray as xr
 import intake
 import intake_esm.derived
-from intake_esm import DerivedVariableRegistry
 
-import access.paths
-import metadata.members
+from coup_ppe.metadata.conventions import EnsembleType, validate_ensemble
+import coup_ppe.access.config
+import coup_ppe.metadata.members
+import coup_ppe.registry.derived_variables
 
 
 def load_ppe(
-        ensemble: str,
+        ensemble: EnsembleType,
         varname: str | list[str],
         component: str,
         frequency: str,
         member: str | int | list[str | int] | None = None,
-        catalog_path: str | None = None,
-        derived_registry: str | None = None,
+        catalog_path: str | pathlib.Path | None = None,
         xarray_open_kwargs: dict | None = None,
         chunks: dict | None = None,
         preprocess: Callable[[xr.Dataset], xr.Dataset] | None = None,
@@ -47,7 +49,7 @@ def load_ppe(
     
     Parameters
     ----------
-    ensemble : str
+    ensemble : EnsembleType
         Name of the ensemble to load data from.
     varname : str | list[str]
         Variable name(s) to load from the ensemble.
@@ -61,9 +63,6 @@ def load_ppe(
         ID numbers (15 or '15'). If None, all members are loaded.
     catalog_path : str | None, optional
         Path to the intake catalog. If None, uses the default catalog location.
-    derived_registry : intake_esm.derived.DerivedVariableRegistry | None, optional
-        DerivedVariableRegistry object for the derived variable functionality of
-        intake-esm. If None, tries to use the default DerivedVariableRegistry.
     xarray_open_kwargs : dict | None, optional
         Additional keyword arguments to pass to xarray's open function.
     chunks : dict | None, optional
@@ -86,45 +85,40 @@ def load_ppe(
     ...     member=["dmax", "fff,min"]
     ... )
     """
+    validate_ensemble(ensemble)
 
     # Ensure varname and member are lists
     vars_to_load = [varname] if isinstance(varname, str) else varname
     mems_to_load = [member] if isinstance(member, (int, str)) else member
 
-    # TODO:
-    # implement logic to find default catalog_path if not provided, put default paths in metadata
-    # should it look for timeseries or history catalog?
+    # Get the catalog path
+    filesystem = coup_ppe.access.config.get_filesystem()
     if not catalog_path:
-        # cat_path = access.paths.DEFAULT_CATALOG_PATH[ensemble]
-        raise NotImplementedError
+        catalog_path = pathlib.Path(__file__).parent / f"catalogs/{ensemble}_timeseries_catalog_{filesystem}.json"
     else:
-        cat_path = pathlib.Path(catalog_path)
-        assert cat_path.suffix == '.json', f"File must be a JSON file, got {cat_path.suffix}"
+        catalog_path = pathlib.Path(catalog_path)
+        assert catalog_path.suffix == '.json', f"File must be a JSON file, got {catalog_path.suffix}"
 
-    # TODO: implement DerivedVariableRegistry
-    if not derived_registry:
-        # derived_registry = derived.derived_variable_registry.DVR
-        pass
-    else:
-        assert isinstance(derived_registry, intake_esm.derived.DerivedVariableRegistry)
+    # Get the derived variable registry
+    dvr = coup_ppe.registry.derived_variables.DVR
 
     # Open catalog
-    cat = intake.open_esm_datastore(cat_path, registry=derived_registry)
+    cat = intake.open_esm_datastore(catalog_path, registry=dvr)
 
     # Parse the members
     if mems_to_load is not None:
-        query = dict(
-            variable=vars_to_load,
-            component=component,
-            frequency=frequency,
-            member=metadata.members.get_canonical_member_ids(mems_to_load, ensemble)
-        )
+        query = {
+            "variable": vars_to_load,
+            "component": component,
+            "frequency": frequency,
+            "member": coup_ppe.metadata.members.get_canonical_member_ids(mems_to_load, ensemble),
+        }
     else:
-        query = dict(
-            variable=vars_to_load,
-            component=component,
-            frequency=frequency,
-        )
+        query = {
+            "variable": vars_to_load,
+            "component": component,
+            "frequency": frequency,
+        }
 
     # Search for the requested data
     cat_subset = cat.search(**query)

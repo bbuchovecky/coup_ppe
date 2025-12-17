@@ -1,13 +1,28 @@
 # coup_ppe
 
-A Python package for working with CESM2 PPE output from the [Ecoclimate Lab](https://www.atmos.washington.edu/~aswann/LabWebsitePublic/) at the University of Washington. 
+A Python package for working with output from CESM2 perturbed parameter ensembles (PPEs) created by the [Ecoclimate Lab](https://www.atmos.washington.edu/~aswann/LabWebsitePublic/). Built on top of `intake-esm` and `ecg-tools` for cataloging the PPE output. 
 
-| Ensemble    	| Default Case Name                                   	| Short Name 	|
-|-------------	|-----------------------------------------------------	|------------	|
-| PI SOM PPE  	| `COUP0000_PI_SOM_v02`                                 | pisom      	|
-| FHIST PPE   	| `f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000` | fhist      	|
-<!-- | FSSP370 PPE 	| `f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000`   | fssp370    	| -->
+| Ensemble    	| Default Coupled Case Name                           	| Short Name 	| Status   	                |
+|-------------	|-----------------------------------------------------	|------------	|-------------------------	|
+| PI SOM PPE  	| COUP0000_PI_SOM_v02                                 	| pisom      	| Complete 	                |
+| FHIST PPE   	| f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000 	| fhist      	| Partial (still running)  	|
+| FSSP370 PPE 	| f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000   	| fssp370    	| TBD      	                |
 
+# Getting started
+```Shell
+$ git clone https://github.com/bbuchovecky/coup_ppe.git
+$ cd coup_ppe
+$ cp config_TEMPLATE.yml config.yml
+```
+Populate `config.yml` according to your filesystem structure.
+```Shell
+$ cd scripts
+$ python create_member_id_map.py
+$ python build_catalog.py coup pisom timeseries
+```
+You can run `python build_catalog.py --help` for details about its arguments.
+
+<!--
 # Tasks
 
 ## Documentation
@@ -15,7 +30,6 @@ A Python package for working with CESM2 PPE output from the [Ecoclimate Lab](htt
 
 ## Catalog model output
 - `access.catalog`: finalize catalog builder function
-- write scripts to catalog pisom and fhist
 - catalog the pisom timeseries
 
 ## Load model output
@@ -38,3 +52,4 @@ A Python package for working with CESM2 PPE output from the [Ecoclimate Lab](htt
 - `stats.aggregate/reduce`:
     - write function to perform spatial aggregation (either area sum or area-weighted average based on intensive/extensive variable property)
     - write a function to select a specific region by lat and lon (e.g., zonal, box)
+-->

@@ -1,6 +1,16 @@
 """
 Docstring for coup_ppe.metadata.conventions
 """
+from __future__ import annotations
+from typing import Literal
+
+# Valid ensemble identifiers
+VALID_ENSEMBLES = ["pisom", "fhist", "ssp370"]
+EnsembleType = Literal["pisom", "fhist", "ssp370"]
+
+# Valid data file formats
+VALID_FILE_FORMATS = ["history", "timeseries"]
+FileFormat = Literal["history", "timeseries"]
 
 PPE_NAME_MAP = {
     "pisom": "PI SOM PPE",
@@ -18,13 +28,43 @@ CESM2_COMPONENT_MAP = {
 }
 
 
-def canonical_component(name: str) -> str:
+def canonical_component(component: str) -> str:
     """Map CESM2 component identifiers to canonical component names."""
-    key = name.lower().strip()
+    key = component.lower().strip()
     return CESM2_COMPONENT_MAP.get(key, key)
 
 
-def ppe_long_name(name: str) -> str:
+def ppe_long_name(ensemble: str) -> str:
     """Map PPE short names to PPE long names."""
-    key = name.lower().strip()
+    key = ensemble.lower().strip()
     return PPE_NAME_MAP.get(key, key)
+
+
+def validate_ensemble(ensemble: str) -> None:
+    """
+    Validate that ensemble is a recognized PPE.
+    
+    Raises
+    ------
+    ValueError
+        If ensemble is not in VALID_ENSEMBLES
+    """
+    if ensemble not in VALID_ENSEMBLES:
+        raise ValueError(
+            f"ensemble must be one of {VALID_ENSEMBLES}, got '{ensemble}'"
+        )
+
+
+def validate_file_format(file_format: str) -> None:
+    """
+    Validate that the data file format is supported.
+    
+    Raises
+    ------
+    ValueError
+        If file_format is not in VALID_FILE_FORMATS
+    """
+    if file_format not in VALID_FILE_FORMATS:
+        raise ValueError(
+            f"ensemble must be one of {VALID_FILE_FORMATS}, got '{file_format}'"
+        )

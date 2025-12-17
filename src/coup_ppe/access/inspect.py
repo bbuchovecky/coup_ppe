@@ -1,13 +1,17 @@
 """
 Docstring for coup_ppe.access.inspect
 """
+from __future__ import annotations
 
 import numpy as np
 import pandas as pd
 import xarray as xr
 
 
-def infer_frequency(ds: xr.DataArray | xr.Dataset, time_name: str = "time") -> str:
+def infer_frequency(
+        ds: xr.DataArray | xr.Dataset,
+        time_name: str = "time",
+    ) -> str | None:
     """
     Infer the time frequency of a dataset from its time coordinate.
     
@@ -23,7 +27,7 @@ def infer_frequency(ds: xr.DataArray | xr.Dataset, time_name: str = "time") -> s
     str or float or None
         Frequency as "hour_3", "hour_6", "day", "month", "year", numeric value, or None
     """
-    assert isinstance(ds, xr.DataArray) or isinstance(ds, xr.Dataset), "only takes xarray.DataArray or xarray.Dataset"
+    assert isinstance(ds, (xr.DataArray, xr.Dataset)), "only takes xarray.DataArray or xarray.Dataset"
     assert time_name in ds.dims, f"{time_name} needs to be a dimension"
 
     # Inspect time deltas
@@ -51,9 +55,7 @@ def infer_frequency(ds: xr.DataArray | xr.Dataset, time_name: str = "time") -> s
         return dtime
     
     # Fallback to metadata attribute
-    else:
-        freq = ds.attrs.get("time_period_freq")
-        if freq is None:
-            return None
-        return freq
-
+    freq = ds.attrs.get("time_period_freq")
+    if freq is None:
+        return None
+    return freq
