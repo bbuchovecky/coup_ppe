@@ -1,0 +1,92 @@
+{
+  "esmcat_version": "0.0.1",
+  "attributes": [
+    {
+      "column_name": "member",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "version",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "component",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "stream",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "date",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "path",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "frequency",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "time_steps",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "start",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "end",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "variable",
+      "vocabulary": ""
+    }
+  ],
+  "assets": {
+    "column_name": "path",
+    "format": "netcdf",
+    "format_column_name": null
+  },
+  "aggregation_control": {
+    "variable_column_name": "variable",
+    "groupby_attrs": [
+      "variable",
+      "component",
+      "stream",
+      "frequency"
+    ],
+    "aggregations": [
+      {
+        "type": "union",
+        "attribute_name": "variable",
+        "options": {}
+      },
+      {
+        "type": "join_existing",
+        "attribute_name": "date",
+        "options": {
+          "dim": "time",
+          "coords": "minimal",
+          "compat": "override"
+        }
+      },
+      {
+        "type": "join_new",
+        "attribute_name": "member",
+        "options": {
+          "dim": "member",
+          "coords": "minimal"
+        }
+      }
+    ]
+  },
+  "id": "pisom_history_catalog_mem",
+  "description": null,
+  "title": null,
+  "last_updated": "2025-12-16T18:20:03Z",
+  "catalog_file": "file:///glade/u/home/bbuchovecky/coup_ppe/dev/pisom_history_catalog_mem.csv"
+}

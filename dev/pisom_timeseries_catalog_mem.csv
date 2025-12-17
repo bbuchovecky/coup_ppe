@@ -1,0 +1,5 @@
+member,version,component,stream,variable,path,variable_long_name,frequency,time_steps,start,end
+6,2,atm,h1,FLNT,/glade/campaign/cgd/tss/czarakas/CoupledPPE/coupled_simulations/COUP0006_PI_SOM_v02/atm/proc/tseries/COUP0006_PI_SOM_v02.cam.h1.timeseries.FLNT.nc,Net longwave flux at top of model,month_1,1680,0049-01-16 12:00:00,0188-12-16 12:00:00
+6,2,atm,h1,FSNT,/glade/campaign/cgd/tss/czarakas/CoupledPPE/coupled_simulations/COUP0006_PI_SOM_v02/atm/proc/tseries/COUP0006_PI_SOM_v02.cam.h1.timeseries.FSNT.nc,Net solar flux at top of model,month_1,1680,0049-01-16 12:00:00,0188-12-16 12:00:00
+8,2,atm,h1,FLNT,/glade/campaign/cgd/tss/czarakas/CoupledPPE/coupled_simulations/COUP0008_PI_SOM_v02/atm/proc/tseries/COUP0008_PI_SOM_v02.cam.h1.timeseries.FLNT.nc,Net longwave flux at top of model,month_1,1680,0049-01-16 12:00:00,0188-12-16 12:00:00
+8,2,atm,h1,FSNT,/glade/campaign/cgd/tss/czarakas/CoupledPPE/coupled_simulations/COUP0008_PI_SOM_v02/atm/proc/tseries/COUP0008_PI_SOM_v02.cam.h1.timeseries.FSNT.nc,Net solar flux at top of model,month_1,1680,0049-01-16 12:00:00,0188-12-16 12:00:00

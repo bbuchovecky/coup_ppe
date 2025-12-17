@@ -1,0 +1,2 @@
+crosswalk.csv columns must be:
+    (member_name, parameter_name, min_max)

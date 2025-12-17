@@ -1,0 +1,102 @@
+fhist:
+  ACCLIM_SF:
+    max: '28'
+    min: '27'
+  FUN_fracfixers:
+    max: '20'
+    min: '19'
+  Jmaxb0:
+    max: '14'
+    min: '13'
+  KCN:
+    max: '26'
+    min: '25'
+  d_max:
+    max: '4'
+    min: '3'
+  default:
+    default: '0'
+  dleaf:
+    max: '2'
+    min: '1'
+  fff:
+    max: '8'
+    min: '7'
+  kmax:
+    max: '16'
+    min: '15'
+  leafcn:
+    max: '22'
+    min: '21'
+  lmrha:
+    max: '24'
+    min: '23'
+  maximum_leaf_wetted_fraction:
+    max: '6'
+    min: '5'
+  medlynintercept:
+    max: '12'
+    min: '11'
+  medlynslope:
+    max: '10'
+    min: '9'
+  psi50:
+    max: '18'
+    min: '17'
+pisom:
+  d_max:
+    max: '8'
+    min: '7'
+  default:
+    default: '0'
+  fff:
+    max: '16'
+    min: '15'
+  frac_sat_soil_dsl_init:
+    max: '10'
+    min: '9'
+  jmaxb0:
+    max: '23'
+    min: '33'
+  jmaxb1:
+    max: '25'
+    min: '24'
+  kmax:
+    max: '27'
+    min: '26'
+  lmrha:
+    max: '31'
+    min: '30'
+  maximum_leaf_wetted_fraction:
+    max: '14'
+    min: '13'
+  medlynintercept:
+    max: '34'
+    min: '20'
+  medlynslope:
+    max: '19'
+    min: '32'
+  nstem:
+    max: '29'
+    min: '28'
+  rhosnir:
+    max: '37'
+    min: '1'
+  sand_pf:
+    max: '36'
+    min: '35'
+  tpu25ratio:
+    max: '22'
+    min: '21'
+  upplim_destruct_metamorph:
+    max: '18'
+    min: '17'
+  z0mr:
+    max: '4'
+    min: '3'
+  zetamaxstable:
+    max: '12'
+    min: '11'
+  zsno:
+    max: '6'
+    min: '5'

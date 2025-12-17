@@ -1,0 +1,69 @@
+{
+  "esmcat_version": "0.0.1",
+  "attributes": [
+    {
+      "column_name": "member",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "version",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "component",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "stream",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "variable",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "path",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "variable_long_name",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "frequency",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "time_steps",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "start",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "end",
+      "vocabulary": ""
+    }
+  ],
+  "assets": {
+    "column_name": "path",
+    "format": "netcdf",
+    "format_column_name": null
+  },
+  "aggregation_control": {
+    "variable_column_name": "variable",
+    "groupby_attrs": [
+      "member",
+      "component",
+      "stream",
+      "frequency"
+    ],
+    "aggregations": []
+  },
+  "id": "pisom_timeseries_catalog_atm",
+  "description": null,
+  "title": null,
+  "last_updated": "2025-12-16T07:03:34Z",
+  "catalog_file": "file:///glade/u/home/bbuchovecky/coup_ppe/dev/pisom_timeseries_catalog_atm.csv"
+}
