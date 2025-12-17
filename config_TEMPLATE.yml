@@ -1,0 +1,29 @@
+# Place for storing information specific to the filesystem
+FILESYSTEM: 'glade'
+ENSEMBLES: ['pisom', 'fhist', 'ssp370']
+FILE_FORMATS: ['history', 'timeseries']
+DATA_ROOT_PATHS:
+  glade:
+    pisom:
+      coup: '/glade/campaign/cgd/tss/czarakas/CoupledPPE/coupled_simulations'
+      offl: '/glade/campaign/cgd/tss/czarakas/CoupledPPE/offline_simulations'
+    fhist: 
+      coup: '/glade/campaign/univ/uwas0155/...'
+      offl: '/glade/campaign/univ/uwas0155/...'
+  daisy:
+    pisom:
+      coup: ''
+      offl: ''
+    fhist:
+      coup: ''
+      offl: ''
+  clyde: 
+    pisom:
+      coup: ''
+      offl: ''
+    fhist:
+      coup: ''
+      offl: ''
+CATALOG_ROOT_PATH: 'src/coup_ppe/catalog'
+CROSSWALK_ROOT_PATH: 'crosswalk'
+MEMBER_ID_MAP_PATH: 'src/coup_ppe/metadata/member_id_map.yml'
