@@ -31,9 +31,9 @@ You can run `python build_catalog.py --help` for details about its arguments.
 # Loading PPE output
 After building the data catalogs, you can access the output with the `access.load` module in your Python scripts.
 ```Python
-import coup_ppe.access.load
+import coup_ppe
 
-ds = coup_ppe.access.load.load_ppe(
+ds = coup_ppe.load_output(
     varname=["TREFHT", "LHFLX"],
     component="atm",
     frequency="month_1",

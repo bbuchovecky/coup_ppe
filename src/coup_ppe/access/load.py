@@ -126,7 +126,7 @@ def query_catalog(
     return cat_subset
 
 
-def load_ppe(
+def load_output(
         ensemble: EnsembleType,
         varname: str | list[str],
         component: str,
@@ -170,12 +170,12 @@ def load_ppe(
     
     Examples
     --------
-    >>> data = load_ppe(
+    >>> data = load_output(
     ...     varname=["TREFHT", "LHFLX"],
     ...     ensemble="pisom",
     ...     component="atm",
     ...     frequency="month_1",
-    ...     member=["dmax", "fff,min"]
+    ...     member=["d_max", "fff,min"]
     ... )
     """
     validate_ensemble(ensemble)
