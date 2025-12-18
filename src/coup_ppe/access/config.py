@@ -1,6 +1,7 @@
 """
 Utilities to read and access configuration settings.
 """
+from __future__ import annotations
 from typing import Optional
 import pathlib
 import yaml

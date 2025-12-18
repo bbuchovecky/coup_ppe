@@ -93,7 +93,7 @@ def _normalize_paths(rootpath: str | pathlib.Path | list[str | pathlib.Path]) ->
 def _build_catalog_builder(paths: list[pathlib.Path], config: dict, parser: Callable) -> Builder:
     """Create and build the catalog builder."""
     builder = Builder(
-        paths=paths,
+        paths=[str(p) for p in paths],
         depth=config["depth"],
         exclude_patterns=config["exclude_patterns"],
         joblib_parallel_kwargs={"n_jobs": -1},

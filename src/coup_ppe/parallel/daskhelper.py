@@ -10,6 +10,7 @@ from glob import glob
 
 from dask_jobqueue import PBSCluster
 from dask.distributed import Client, get_client
+import subprocess
 
 
 def is_dask_available():
@@ -84,10 +85,11 @@ def create_dask_cluster(
     return client, cluster
 
 
-def close_dask_cluster(client, cluster):
+def close_dask_cluster(client, cluster, remove_std_files=True):
     """Close dask cluster and clean up the workspace."""
     client.close()
     cluster.close()
-    for f in glob("dask-worker.*"):
-        os.remove(f)
+    if remove_std_files:
+        for f in glob("dask-worker.*"):
+            os.remove(f)
 

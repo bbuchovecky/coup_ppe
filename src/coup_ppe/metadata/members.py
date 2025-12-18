@@ -128,7 +128,7 @@ def get_canonical_member_ids(
                     param, minmax = m.split(",")
                     assert param in member_id_map.keys(), f"{param} not a valid parameter in '{ensemble}'"
                     assert minmax in ["min", "max"], f"{minmax} not either 'min' or 'max'"
-                    member_ids.add(member_id_map[ensemble][param][minmax])
+                    member_ids.add(member_id_map[param][minmax])
 
                 # If format is parameter name (e.g, 'fff')
                 else:

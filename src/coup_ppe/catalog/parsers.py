@@ -23,7 +23,7 @@ def parse_pisom_timeseries(file):
         split = stem.split(".")
         name = split[0].split("_")
 
-        info["member"] = str(int(name[0][4:]))
+        info["member"] = int(name[0][4:])
         if "v" in name[-1]:
             info["version"] = str(int(name[-1][1:]))
         else:
@@ -56,7 +56,7 @@ def parse_pisom_history(file: str | pathlib.Path) -> dict:
         split = stem.split(".")
         name = split[0].split("_")
 
-        info["member"] = str(int(name[0][4:]))
+        info["member"] = int(name[0][4:])
         if "v" in name[-1]:
             info["version"] = str(int(name[-1][1:]))
         else:
@@ -88,7 +88,7 @@ def parse_fhist_history(file: str | pathlib.Path) -> dict:
         stem = file.stem
         split = stem.split(".")
 
-        info["member"] = str(int(split[6]))
+        info["member"] = int(split[6])
         info["component"] = coup_ppe.metadata.conventions.canonical_component(split[7])
         info["stream"] = split[8]
         info["date"] = split[9]

@@ -9,12 +9,18 @@ A Python package for working with output from CESM2 perturbed parameter ensemble
 | FSSP370 PPE 	| f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000   	| fssp370    	| TBD      	                |
 
 # Getting started
+Clone the repo and install the conda environment.
 ```Shell
 $ git clone https://github.com/bbuchovecky/coup_ppe.git
 $ cd coup_ppe
+$ conda env create -f environment.yml
+$ conda activate coup-ppe
+```
+Copy and populate `config.yml` according to your filesystem structure.
+```Shell
 $ cp config_TEMPLATE.yml config.yml
 ```
-Populate `config.yml` according to your filesystem structure.
+Run scripts to set up workspace and create a data catalog of the PPE output.
 ```Shell
 $ cd scripts
 $ python create_member_id_map.py
