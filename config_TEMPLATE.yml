@@ -17,13 +17,6 @@ DATA_ROOT_PATHS:
     fhist:
       coup: ''
       offl: ''
-  clyde: 
-    pisom:
-      coup: ''
-      offl: ''
-    fhist:
-      coup: ''
-      offl: ''
-CATALOG_ROOT_PATH: 'src/coup_ppe/catalog'
+CATALOG_ROOT_PATH: 'src/coup_ppe/catalog'  # probably should move to 'catalog'
 CROSSWALK_ROOT_PATH: 'crosswalk'
 MEMBER_ID_MAP_PATH: 'src/coup_ppe/metadata/member_id_map.yml'
