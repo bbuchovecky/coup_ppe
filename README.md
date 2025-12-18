@@ -24,9 +24,35 @@ Run scripts to set up workspace and create a data catalog of the PPE output.
 ```Shell
 $ cd scripts
 $ python create_member_id_map.py
-$ python build_catalog.py coup pisom timeseries
+$ python build_catalog.py coup pisom timeseries --dask-cluster <ACCOUNT> 15 1GB 01:00:00
 ```
 You can run `python build_catalog.py --help` for details about its arguments.
+
+# Loading PPE output
+After building the data catalogs, you can access the output with the `access.load` module in your Python scripts.
+```Python
+import coup_ppe.access.load
+
+ds = coup_ppe.access.load.load_ppe(
+    varname=["TREFHT", "LHFLX"],
+    component="atm",
+    frequency="month_1",
+    member=["fff", "d_max,min"]
+)
+```
+
+# TODO
+- check that the derived variable registry works
+- `metadata.units`: add functionality to infer units, convert to base units, convert to specified units
+- `metadata.variables`: do I still need this?
+    - store intensive vs. extensive properties for spatial aggregation
+    - write a function to scrape NetCDF metadata and generate NamedTuple or custom data structure for each variable (e.g., base units, dimensions, aggregation weight, intensive/extensive, long name, component, kind: rate/state, formula, derived from, cell methods)
+- `metadata.grid`: decide on scope: access files via paths from `config.yml` or do everything here?
+    - store grid information (e.g., gridcell area, ocean/land masks)
+    - keep paths to these files in `config.yml`
+- `stats.aggregate/reduce`: perform spatial aggregation (either area sum or area-weighted average based on intensive/extensive variable property)
+- `stats.spatial_subset`: select a specific region by lat and lon (e.g., zonal, box)
+
 
 <!--
 # Tasks
@@ -35,12 +61,7 @@ You can run `python build_catalog.py --help` for details about its arguments.
 - create annotated directory structure
 
 ## Catalog model output
-- `access.catalog`: finalize catalog builder function
 - catalog the pisom timeseries
-
-## Load model output
-- determine where/how to store dictionaries for variables, ensemble names, etc.
-- `access.load`: write a wrapper of intake-esm to query, search, and load a dataset
 
 ## Derived variable registry
 - `registry.derived_vars`: write functions for common derived variables (e.g., PRECT)
