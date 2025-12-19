@@ -1,16 +1,16 @@
 """
 Statistical utilities for performing multiple hypothesis tests.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 import numpy as np
 import xarray as xr
 
 
 def calculate_pval_fdr(
-        ps : xr.DataArray | np.ndarray,
-        alpha_fdr : float,
-    ) -> float:
+    ps: xr.DataArray | np.ndarray,
+    alpha_fdr: float,
+) -> float:
     """
     Calculates the adjusted p-value threshold given a
     specified false discovery rate (FDR) control level.
@@ -48,7 +48,7 @@ def calculate_pval_fdr(
     if ps_sorted_subset.size > 0:
         p_fdr = ps_sorted[ps_sorted_subset].max()
     else:
-        print('no p-values above the FDR control level')
+        print("no p-values above the FDR control level")
         p_fdr = np.nan
 
     return p_fdr

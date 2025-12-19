@@ -1,8 +1,8 @@
 """
 Data loading utilities for PPEs.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 from typing import Callable
 import pathlib
 import numpy as np
@@ -10,10 +10,10 @@ import xarray as xr
 import intake
 import intake_esm.core
 
-from coup_ppe.metadata.conventions import PISOM_MEMBERS, EnsembleType, validate_ensemble
-import coup_ppe.access.config
-import coup_ppe.metadata.members
-import coup_ppe.registry.derived_variables
+from xppe.metadata.conventions import PISOM_MEMBERS, EnsembleType, validate_ensemble
+import xppe.access.config as config
+import xppe.metadata.members as members
+import xppe.registry.derived_variables as derived_variables
 
 
 def _to_str_list(xs) -> list[str] | None:
@@ -27,6 +27,7 @@ def _to_str_list(xs) -> list[str] | None:
 
 def _shift_time(ds: xr.DataArray | xr.Dataset) -> xr.DataArray | xr.Dataset:
     """Shifts time coordinate from [startyear-02, endyear-01] to [startyear-02, (endyear-1)-12]"""
+    assert "time" in ds.dims
     if (ds.time[0].dt.month.item() == 2) and (ds.time[-1].dt.month.item() == 1):
         new_time = xr.date_range(
             start=str(ds.time[0].dt.year.item()) + "-01",
@@ -40,16 +41,16 @@ def _shift_time(ds: xr.DataArray | xr.Dataset) -> xr.DataArray | xr.Dataset:
 
 
 def query_catalog(
-        ensemble: EnsembleType,
-        varname: str | list[str],
-        component: str,
-        frequency: str,
-        member: str | int | list[str | int] | None = None,
-        stream: str | None = None,
-        catalog_path: str | pathlib.Path | None = None,
-    ) -> intake_esm.core.esm_datastores:
+    ensemble: EnsembleType,
+    varname: str | list[str],
+    component: str,
+    frequency: str,
+    member: str | int | list[str | int] | None = None,
+    stream: str | None = None,
+    catalog_path: str | pathlib.Path | None = None,
+) -> intake_esm.core.esm_datastore:
     """
-    Query an intake-ESM catalog for CESM PPE data.
+    Query an intake-esm catalog for PPE output.
 
     Parameters
     ----------
@@ -68,10 +69,12 @@ def query_catalog(
     catalog_path : str | pathlib.Path | None, optional
         Path to the intake-ESM catalog JSON file. If None, uses the default catalog path
         constructed from ensemble name and filesystem configuration.
+    
     Returns
     -------
     intake_esm.core.esm_datastore
         Subset of the catalog matching the query criteria.
+    
     Notes
     -----
     - The function validates the ensemble type before querying.
@@ -89,57 +92,57 @@ def query_catalog(
         mems_to_load = _to_str_list(member)
 
     # Get the catalog path
-    filesystem = coup_ppe.access.config.get_filesystem()
-    catalog_root_path = coup_ppe.access.config.get_catalog_root_path()
+    filesystem = config.get_filesystem()
+    catalog_root_path = config.get_catalog_root_path()
     if not catalog_path:
-        catalog_path = catalog_root_path / f"{ensemble}_timeseries_catalog_{filesystem}.json"
+        catalog_path = (
+            catalog_root_path / f"{ensemble}_timeseries_catalog_{filesystem}.json"
+        )
     else:
         catalog_path = pathlib.Path(catalog_path)
-        assert catalog_path.suffix == '.json', f"File must be a JSON file, got {catalog_path.suffix}"
+        assert (
+            catalog_path.suffix == ".json"
+        ), f"File must be a JSON file, got {catalog_path.suffix}"
 
     # Get the derived variable registry
-    dvr = coup_ppe.registry.derived_variables.DVR
+    dvr = derived_variables.DVR
 
     # Open catalog
     cat = intake.open_esm_datastore(catalog_path, registry=dvr)
 
-    query = {
-        "variable": vars_to_load,
-        "component": component,
-        "frequency": frequency,
-    }
+    query = {"variable": vars_to_load, "component": component, "frequency": frequency}
 
     # Parse the members
     if mems_to_load is not None:
         # Remove ensemble 0002 if pisom, there was an issue with this simulation so ignore
         if (ensemble == "pisom") and ("2" in mems_to_load):
             mems_to_load = [m for m in mems_to_load if m != "2"]
-        query["member"] = coup_ppe.metadata.members.get_canonical_member_ids(mems_to_load, ensemble)
-    
+        query["member"] = members.get_canonical_member_ids(mems_to_load, ensemble)
+
     # Select the streams if applicable
     if stream is not None:
         query["stream"] = stream
 
     # Search for the requested data
     cat_subset = cat.search(**query)
-    
+
     return cat_subset
 
 
 def load_output(
-        ensemble: EnsembleType,
-        varname: str | list[str],
-        component: str,
-        frequency: str,
-        member: str | int | list[str | int] | None = None,
-        catalog_path: str | pathlib.Path | None = None,
-        xarray_open_kwargs: dict | None = None,
-        chunks: dict | None = None,
-        preprocess: Callable[[xr.Dataset], xr.Dataset] | None = None,
-    ) -> xr.Dataset:
+    ensemble: EnsembleType,
+    varname: str | list[str],
+    component: str,
+    frequency: str,
+    member: str | int | list[str | int] | None = None,
+    catalog_path: str | pathlib.Path | None = None,
+    xarray_open_kwargs: dict | None = None,
+    chunks: dict | None = None,
+    preprocess: Callable[[xr.Dataset], xr.Dataset] | None = None,
+) -> xr.Dataset:
     """
-    Load perturbed parameter ensemble (PPE) output.
-    
+    Load PPE output.
+
     Parameters
     ----------
     ensemble : EnsembleType
@@ -167,7 +170,7 @@ def load_output(
     -------
     xr.Dataset
         Dataset containing the requested variable(s) across ensemble members.
-    
+
     Examples
     --------
     >>> data = load_output(
@@ -202,17 +205,21 @@ def load_output(
         open_kwargs["chunks"] = chunks
     if ensemble == "pisom":
         open_kwargs["drop_variables"] = ["var"]
-    
+
     # Get rid of spurious warnings
     xr.set_options(use_new_combine_kwarg_defaults=True)
 
     # Set default preprocessing with a wrapper function
-    def _preprocess(ds):
+    def _preprocess(ds: xr.Dataset) -> xr.Dataset:
         if ensemble == "pisom":
-            ds = ds.sel(time=slice("0050-01", "0184-12"))
+            ds = _shift_time(ds).sel(time=slice("0050-01", "0184-12"))
         if preprocess is not None:
             ds = preprocess(ds)
         return ds
+
+    # Notify user about default preprocessing for pisom
+    if ensemble == "pisom":
+        print("selecting time range [0050-01, 0184-12]")
 
     # Load each variable separately to avoid coordinate conflicts
     datasets = []
@@ -229,7 +236,9 @@ def load_output(
 
         # Combine all keys for this variable
         var_ds = list(ds_dict.values())
-        if len(var_ds) == 1:
+        if len(var_ds) == 0:
+            print(f"{var} not found")
+        elif len(var_ds) == 1:
             datasets.append(var_ds[0])
         else:
             # >> This logic could be brittle. <<
@@ -240,16 +249,14 @@ def load_output(
 
             # var_ds_reset = [ds.reset_coords(drop=False) for ds in var_ds]
             # datasets.append(xr.merge(var_ds_reset, join="outer", compat="no_conflicts"))
-    
+
     # Merge all variables together
     result = xr.merge(datasets, join="outer", compat="no_conflicts")
+    assert isinstance(result, xr.Dataset)
 
     # Sort the member dimension
     ms = np.sort(result.member.values.astype(int))
     result = result.sel(member=ms.astype(str))
     result["member"] = ms
-
-    # Shift time (only relevant for certain pisom simulations)
-    result = _shift_time(result)
 
     return result

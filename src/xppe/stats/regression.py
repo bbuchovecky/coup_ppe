@@ -1,8 +1,8 @@
 """
 Statistical regression utilities for xarray fields and NumPy arrays.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 import numpy as np
 import xarray as xr
 import scipy.stats as stats
@@ -10,17 +10,17 @@ import scipy.odr as odr
 
 
 def _ols_single(x, y, alpha=0.05):
-    """ Core function for computing ordinary least squares (OLS) regression """
+    """Core function for computing ordinary least squares (OLS) regression."""
     # Coerce to 1D arrays and drop NaNs
     x = np.asarray(x).ravel()
     y = np.asarray(y).ravel()
     valid = np.isfinite(x) & np.isfinite(y)
     x, y = x[valid], y[valid]
 
-     # Exit if not enough data
+    # Exit if not enough data
     if x.size < 3:
         return np.nan, np.nan, np.nan, np.nan, np.nan, np.nan
-    
+
     # Perform the regression output
     ols = stats.linregress(x, y)
     slope = ols.slope
@@ -44,7 +44,7 @@ def _ols_single(x, y, alpha=0.05):
 
 
 def ols_single(x, y, alpha=0.05):
-    """ Wrapper of OLS for 1D arrays """
+    """Wrapper of OLS for 1D arrays."""
     out = _ols_single(x, y, alpha=alpha)
     slope, intercept, slope_se, intercept_se, slope_ci_halfwidth, slope_p_value = out
     result = dict(
@@ -59,41 +59,42 @@ def ols_single(x, y, alpha=0.05):
 
 
 def ols_field(x_da, y_da, sample_dim, alpha=0.05):
-    """ Wrapper of OLS for multidimensional xarray datasets """
+    """Wrapper of OLS for multidimensional xarray datasets."""
     args = [x_da, y_da]
     core_dims = [[sample_dim], [sample_dim]]
 
     out = xr.apply_ufunc(
-        _ols_single, *args,
+        _ols_single,
+        *args,
         input_core_dims=core_dims,
         output_core_dims=[[], [], [], [], [], []],
         vectorize=True,
         dask="parallelized",
         join="inner",
         output_dtypes=[float, float, float, float, float, float],
-        kwargs=dict(alpha=alpha)
+        kwargs=dict(alpha=alpha),
     )
 
     slope, intercept, slope_se, intercept_se, slope_ci_halfwidth, slope_p_value = out
-    slope.name              = "slope",
-    intercept.name          = "intercept"
-    slope_se.name           = "slope_se"
-    intercept_se.name       = "intercept_se"
+    slope.name = ("slope",)
+    intercept.name = "intercept"
+    slope_se.name = "slope_se"
+    intercept_se.name = "intercept_se"
     slope_ci_halfwidth.name = "slope_ci_halfwidth"
-    slope_p_value.name      = "slope_p_value"
+    slope_p_value.name = "slope_p_value"
 
     return slope, intercept, slope_se, intercept_se, slope_ci_halfwidth, slope_p_value
 
 
 def _odr_single(x, y, alpha=0.05):
-    """ Core function for computing orthogonal distance regression (ODR) regression """
+    """Core function for computing orthogonal distance regression (ODR) regression."""
     # Coerce to 1D arrays and drop NaNs
     x = np.asarray(x).ravel()
     y = np.asarray(y).ravel()
     valid = np.isfinite(x) & np.isfinite(y)
     x, y = x[valid], y[valid]
 
-     # Exit if not enough data
+    # Exit if not enough data
     if x.size < 3:
         return np.nan, np.nan, np.nan, np.nan, np.nan, np.nan
 
@@ -131,7 +132,7 @@ def _odr_single(x, y, alpha=0.05):
 
 
 def odr_single(x, y, alpha=0.05):
-    """ Wrapper of ODR for 1D arrays """
+    """Wrapper of ODR for 1D arrays"""
     out = _odr_single(x, y, alpha=alpha)
     slope, intercept, slope_se, intercept_se, slope_ci_halfwidth, slope_p_value = out
     result = dict(
@@ -146,12 +147,13 @@ def odr_single(x, y, alpha=0.05):
 
 
 def odr_field(x_da, y_da, sample_dim, alpha=0.05):
-    """ Wrapper of ODR for multidimensional xarray datasets """
+    """Wrapper of ODR for multidimensional xarray datasets."""
     args = [x_da, y_da]
     core_dims = [[sample_dim], [sample_dim]]
 
     out = xr.apply_ufunc(
-        _odr_single, *args,
+        _odr_single,
+        *args,
         input_core_dims=core_dims,
         output_core_dims=[[], [], [], [], [], []],
         vectorize=True,
@@ -162,11 +164,11 @@ def odr_field(x_da, y_da, sample_dim, alpha=0.05):
     )
 
     slope, intercept, slope_se, intercept_se, slope_ci_halfwidth, slope_p_value = out
-    slope.name              = "slope",
-    intercept.name          = "intercept"
-    slope_se.name           = "slope_se"
-    intercept_se.name       = "intercept_se"
+    slope.name = ("slope")
+    intercept.name = "intercept"
+    slope_se.name = "slope_se"
+    intercept_se.name = "intercept_se"
     slope_ci_halfwidth.name = "slope_ci_halfwidth"
-    slope_p_value.name      = "slope_p_value"
+    slope_p_value.name = "slope_p_value"
 
     return slope, intercept, slope_se, intercept_se, slope_ci_halfwidth, slope_p_value

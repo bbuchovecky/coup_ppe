@@ -1,11 +1,34 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ['setuptools>=68', 'wheel']
+build-backend = 'setuptools.build_meta'
 
 [project]
-name = "coup-ppe"
-version = "0.1.0"
-requires-python = ">=3.10"
+name = 'xppe'
+version = '0.1.0'
+requires-python = '>=3.10'
+
+[project.scripts]
+xppe-build-catalog xppe.cli:build_catalog'
+xppe-build-member-id-map xppe.cli:build_member_id_map'
 
 [tool.setuptools]
-package-dir = {"" = "src"}
+package-dir = {'' = 'src'}
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310']
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''

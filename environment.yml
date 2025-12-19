@@ -4,32 +4,38 @@ channels:
 dependencies:
   - python>=3.11,<3.13
   - pip
+  - pytest
 
+  # Core data cataloging
+  - ecgtools
+  - intake-esm
+
+  # Core scientific python
   - numpy
   - pandas
   - xarray
   - netcdf4
   - h5netcdf
+  - cftime
   - scipy
   - metpy
   - xskillscore
-  - cftime
   
+  # Parallel computing
   - dask
   - dask-jobqueue
   - distributed
 
+  # Visualization
   - matplotlib
   - cartopy
   - cmocean
 
+  # IPython for jupyter notebooks
   - jupyterlab
   - ipykernel
   - nbconvert
 
-  - ecgtools
-  - intake-esm
-
   - pip:
       - -e .
-      - watermark
+      - black

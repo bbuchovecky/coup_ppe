@@ -1,3 +1,1 @@
-# Building catalogs
-
-# Creating member ID map
+Redundant with command line utilities listed in `pyproject.toml`

@@ -2,11 +2,12 @@
 """
 Create YAML dictionary for the member ID map.
 """
-import coup_ppe.metadata.members
+
+from xppe.metadata import members
 
 
 def main():
-    coup_ppe.metadata.members.create_member_id_map_yaml()
+    members.build_member_id_map_yaml()
 
 if __name__ == "__main__":
     main()
