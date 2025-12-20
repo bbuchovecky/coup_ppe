@@ -6,16 +6,20 @@ from __future__ import annotations
 from typing import Literal
 
 # Valid ensemble identifiers
-VALID_ENSEMBLES = ["pisom", "fhist", "ssp370"]
-EnsembleType = Literal["pisom", "fhist", "ssp370"]
+VALID_ENSEMBLES = ["pisom", "fhist", "hadcm3"]
+EnsembleType = Literal["pisom", "fhist", "hadcm3"]
 
 # Valid data file formats
 VALID_FILE_FORMATS = ["history", "timeseries"]
 FileFormat = Literal["history", "timeseries"]
 
 # Valid 'kind'
-VALID_KINDS = ["coup", "offl"]
-Kind = Literal["coup", "offl"]
+VALID_KINDS = ["coup", "offl", "control", "a1b"]
+Kind = Literal["coup", "offl", "control", "a1b"]
+
+# Valid models
+VALID_MODELS = ["cesm2", "hadcm3"]
+Model = Literal["cesm2", "hadcm3"]
 
 # For black formatter
 # fmt: off
@@ -35,13 +39,25 @@ FHIST_MEMBERS = [
    '20', '21', '22', '23', '24', '25', '26', '27', '28',
 ]
 
+# Valid hadcm3 member IDs
+HADCM3_MEMBERS = [
+    '0',  '1',  '2',  '3',  '4',  '5',  '6',  '7',  '8',  '9',
+   '10', '11', '12', '13', '14', '15', '16',
+]
+
 # For black formatter
 # fmt: on
 
 PPE_NAME_MAP = {
     "pisom": "PI SOM PPE",
     "fhist": "FHIST PPE",
-    "fssp370": "FSSP370 PPE",
+    "hadcm3": "HadCM3 PPE",
+}
+
+PPE_MEMBERS = {
+    "pisom": PISOM_MEMBERS,
+    "fhist": FHIST_MEMBERS,
+    "hadcm3": HADCM3_MEMBERS,
 }
 
 CESM2_COMPONENT_MAP = {
@@ -66,43 +82,35 @@ def ppe_long_name(ensemble: str) -> str:
     return PPE_NAME_MAP.get(key, key)
 
 
-def validate_ensemble(ensemble: str) -> None:
-    """
-    Validate that ensemble is a recognized PPE.
+def validate_ensemble_kind(ensemble: str, kind: str) -> None:
+    """Validate that (ensemble, kind) pairing is compatible."""
+    validate_ensemble(ensemble)
+    validate_kind(kind)
+    if (ensemble in ("pisom", "fhist")) and (kind in ("a1b", "control")):
+        raise ValueError(
+            f"('{ensemble}', '{kind}') pairing is not compatible. '{ensemble}' accepts ('coup', 'offl')"
+        )
+    if (ensemble == "hadcm3") and (kind in ("coup", "offl")):
+        raise ValueError(
+            f"('{ensemble}', '{kind}') pairing is not compatible. '{ensemble}' accepts ('control', 'a1b')"
+        )
 
-    Raises
-    ------
-    ValueError
-        If ensemble is not in VALID_ENSEMBLES
-    """
+
+def validate_ensemble(ensemble: str) -> None:
+    """Validate that the ensemble is supported."""
     if ensemble not in VALID_ENSEMBLES:
         raise ValueError(f"ensemble must be one of {VALID_ENSEMBLES}, got '{ensemble}'")
 
 
-def validate_file_format(file_format: str) -> None:
-    """
-    Validate that the data file format is supported.
+def validate_kind(kind: str) -> None:
+    """Validate that the kind is supported."""
+    if kind not in VALID_KINDS:
+        raise ValueError(f"kind must be one of {VALID_KINDS}, got '{kind}'")
 
-    Raises
-    ------
-    ValueError
-        If file_format is not in VALID_FILE_FORMATS
-    """
+
+def validate_file_format(file_format: str) -> None:
+    """Validate that the data file format is supported."""
     if file_format not in VALID_FILE_FORMATS:
         raise ValueError(
             f"file_format must be one of {VALID_FILE_FORMATS}, got '{file_format}'"
-        )
-
-def validate_kind(kind: str) -> None:
-    """
-    Validate that the kind ('coup', 'offl') is supported.
-
-    Raises
-    ------
-    ValueError
-        If kind is not in VALID_KINDS
-    """
-    if kind not in VALID_KINDS:
-        raise ValueError(
-            f"kind must be one of {VALID_KINDS}, got '{kind}'"
         )

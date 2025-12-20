@@ -1,12 +1,14 @@
 # xppe
 
-A Python package for working with output from CESM2 perturbed parameter ensembles (PPEs) created by the [Ecoclimate Lab](https://www.atmos.washington.edu/~aswann/LabWebsitePublic/). Built on top of `intake-esm` and `ecg-tools` for cataloging data. 
+A Python package for working with output from perturbed parameter ensembles (PPEs). Built on top of `intake-esm` and `ecg-tools` for cataloging data. Developed for CESM2 output from the [Ecoclimate Lab](https://www.atmos.washington.edu/~aswann/LabWebsitePublic/).
 
-| Ensemble    	| Default Coupled Case Name                           	| Short Name 	| Status   	                |
-|-------------	|-----------------------------------------------------	|------------	|-------------------------	|
-| PI SOM PPE  	| COUP0000_PI_SOM_v02                                 	| pisom      	| Complete 	                |
-| FHIST PPE   	| f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000 	| fhist      	| Incomplete (still running)  	|
-<!-- | FSSP370 PPE 	| f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000   	| fssp370    	| TBD      	                | -->
+| Ensemble      	| Short Name 	| Status   	                 | Reference
+|---------------	|-------------	|--------------------------  | --------------
+| CESM2 PI SOM PPE 	| pisom      	| Available                  | [Zarakas et al. (2024)](https://doi.org/10.1029/2024GL108372)
+| CESM2 FHIST PPE   | fhist      	| Incomplete (still running) |
+| HadCM3 PPE        | hadcm3        | Available                  | [Booth et al. (2012)](https://doi.org/10.1088/1748-9326/7/2/024002)
+
+
 
 # Getting started
 Clone the repo and install the conda environment.

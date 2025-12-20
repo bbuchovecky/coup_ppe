@@ -4,7 +4,7 @@ Metadata and utilities for managing ensemble member identifiers.
 
 from __future__ import annotations
 from typing import Optional
-import pathlib
+from pathlib import Path
 import pandas as pd
 import yaml
 
@@ -12,8 +12,8 @@ from xppe.metadata.conventions import EnsembleType, validate_ensemble
 from xppe.access import config
 
 
-MODULE_DIR = pathlib.Path(__file__).parent.resolve()
-PACKAGE_ROOT_DIR = pathlib.Path(__file__).parent.parent.parent.resolve()
+MODULE_DIR = Path(__file__).parent.resolve()
+PACKAGE_ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
 
 
 def _get_member_id(
@@ -23,6 +23,8 @@ def _get_member_id(
     """Helper function to get the member ID."""
     if ensemble == "pisom":
         return str(int(member[4:8]))
+    if ensemble == "hadcm3":
+        return str(int(member))
     return str(int(member[-3:]))
 
 
@@ -32,7 +34,6 @@ def parse_member_id(
 ) -> str:
     """Parse the member ID from a string."""
     if ensemble:
-        validate_ensemble(ensemble)
         return _get_member_id(member, ensemble)
     if "coupPPE" in member:
         return _get_member_id(member, "fhist")
@@ -47,14 +48,17 @@ def _crosswalk_df_to_member_id_map(cw: pd.DataFrame) -> dict:
     for _, row in cw.iterrows():
         param = row["param"]
         minmax = row["minmax"]
-        member_id = parse_member_id(row["member"])
+        member_id = parse_member_id(str(row["member"]))
 
-        # Initialize param dict if it doesn't exist
-        if param not in member_param_map:
-            member_param_map[param] = {}
-
-        # Add the minmax -> member_id mapping
-        member_param_map[param][minmax] = member_id
+        # Add the param -> minmax -> member_id mapping
+        if pd.notna(minmax):
+            # Initialize param dict if it doesn't exist
+            if param not in member_param_map:
+                member_param_map[param] = {}
+            member_param_map[param][minmax] = member_id
+        # Else add the param -> member_id mapping, for HadCM3
+        else:
+            member_param_map[param] = member_id
 
     return member_param_map
 
@@ -68,7 +72,7 @@ def create_member_id_map(ensemble: EnsembleType) -> dict:
     return _crosswalk_df_to_member_id_map(crosswalk_df)
 
 
-def build_member_id_map_yaml() -> pathlib.Path:
+def build_member_id_map_yaml() -> Path:
     """Build a member ID map dictionary and save as a YAML file."""
     ensembles = config.get_ensembles()
     member_id_map_path = config.get_member_id_map_path()
@@ -79,7 +83,7 @@ def build_member_id_map_yaml() -> pathlib.Path:
 
     # Save the member map dictionary as a YAML file
     with open(member_id_map_path, "w") as f:
-        yaml.dump(member_id_map_path, f, default_flow_style=False)
+        yaml.dump(member_id_map, f, default_flow_style=False)
 
     return member_id_map_path
 
@@ -90,7 +94,10 @@ def load_member_id_map(ensemble: EnsembleType) -> dict:
     member_id_map_path = config.get_member_id_map_path()
     with open(member_id_map_path, "r") as f:
         member_id_map = yaml.safe_load(f)
-    return member_id_map[ensemble]
+    try:
+        return member_id_map[ensemble]
+    except Exception as exc:
+        raise KeyError(f"'{ensemble}' not a valid key in {member_id_map_path}") from exc
 
 
 def get_canonical_member_ids(
@@ -105,7 +112,7 @@ def get_canonical_member_ids(
     members : int | str | list[int | str]
         Any member identifier.
     ensemble: str
-        Ensemble name ('pisom', 'fhist', 'fssp370').
+        Ensemble name ('pisom', 'fhist', 'hadcm3').
 
     Returns
     -------
@@ -117,15 +124,19 @@ def get_canonical_member_ids(
     # Ensure members is a list
     members = [members] if isinstance(members, (int, str)) else members
 
+    # Convert member IDs to strings
+    if all(isinstance(m, int) for m in members):
+        return sorted([str(m) for m in members])
+    
     # Load member ID -> parameter maps
     member_id_map = load_member_id_map(ensemble)
 
-    # Convert member IDs to strings
-    if all(isinstance(m, int) for m in members):
-        member_ids = [str(m) for m in members]
-
     # Logic to deal with member names
-    elif all(isinstance(m, str) for m in members):
+    if all(isinstance(m, str) for m in members):
+        # Deal with HadCM3 members
+        if ensemble == "hadcm3":
+            return sorted([parse_member_id(m, ensemble) for m in members])
+
         member_ids = set()
         for m in members:
             try:
@@ -134,7 +145,7 @@ def get_canonical_member_ids(
 
             except ValueError:
                 # If format is a full member name (e.g., 'COUP0001_PI_SOM_v02', 'coupPPE.002')
-                if any(pattern in m for pattern in ["COUP", "coupPPE"]):
+                if any(pattern in m for pattern in ["COUP", "OFFL", "coupPPE", "offlPPE"]):
                     member_ids.add(parse_member_id(m))
 
                 # If format is parameter name and min/max (e.g., 'fff,min')

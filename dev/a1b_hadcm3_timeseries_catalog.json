@@ -1,0 +1,69 @@
+{
+  "esmcat_version": "0.0.1",
+  "attributes": [
+    {
+      "column_name": "member",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "variable",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "preprocess",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "path",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "frequency",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "time_steps",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "start",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "end",
+      "vocabulary": ""
+    }
+  ],
+  "assets": {
+    "column_name": "path",
+    "format": "netcdf",
+    "format_column_name": null
+  },
+  "aggregation_control": {
+    "variable_column_name": "variable",
+    "groupby_attrs": [
+      "variable",
+      "frequency"
+    ],
+    "aggregations": [
+      {
+        "type": "union",
+        "attribute_name": "variable",
+        "options": {}
+      },
+      {
+        "type": "join_new",
+        "attribute_name": "member",
+        "options": {
+          "dim": "member",
+          "coords": "minimal"
+        }
+      }
+    ]
+  },
+  "id": "a1b_hadcm3_timeseries_catalog",
+  "description": null,
+  "title": null,
+  "last_updated": "2025-12-20T23:10:47Z",
+  "catalog_file": "file:///glade/u/home/bbuchovecky/xppe/dev/a1b_hadcm3_timeseries_catalog.csv"
+}

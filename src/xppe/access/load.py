@@ -3,14 +3,18 @@ Data loading utilities for PPEs.
 """
 
 from __future__ import annotations
-from typing import Callable
-import pathlib
+from typing import Callable, Optional
+from pathlib import Path
 import numpy as np
 import xarray as xr
 import intake
 import intake_esm.core
 
-from xppe.metadata.conventions import PISOM_MEMBERS, EnsembleType, validate_ensemble
+from xppe.metadata.conventions import (
+    PPE_MEMBERS,
+    Kind, EnsembleType,
+    validate_ensemble_kind,
+)
 import xppe.access.config as config
 import xppe.metadata.members as members
 import xppe.registry.derived_variables as derived_variables
@@ -41,40 +45,45 @@ def _shift_time(ds: xr.DataArray | xr.Dataset) -> xr.DataArray | xr.Dataset:
 
 
 def query_catalog(
+    kind: Kind,
     ensemble: EnsembleType,
     varname: str | list[str],
-    component: str,
-    frequency: str,
-    member: str | int | list[str | int] | None = None,
-    stream: str | None = None,
-    catalog_path: str | pathlib.Path | None = None,
+    component: Optional[str] = None,
+    frequency: Optional[str] = None,
+    member: Optional[str | int | list[str | int]] = None,
+    stream: Optional[str] = None,
+    catalog_path: Optional[str | Path] = None,
 ) -> intake_esm.core.esm_datastore:
     """
     Query an intake-esm catalog for PPE output.
 
     Parameters
     ----------
-    ensemble : EnsembleType
+    kind : str
+        Kind of simulation ('coup', 'offl') for CESM PPEs or
+        ('control', 'a1b') for HadCM3 PPE.
+    ensemble : str
         The ensemble to query (e.g., 'pisom').
     varname : str | list[str]
         Variable name(s) to query from the catalog.
-    component : str
+    component : str, optional
         Model component (e.g., 'atm', 'ocn', 'ice', 'lnd').
-    frequency : str
+    frequency : str, optional
         Temporal frequency of the data (e.g., 'monthly', 'daily').
     member : str | int | list[str | int] | None, optional
         Ensemble member(s) to query. If None, defaults to all PISOM members.
     stream : str | None, optional
-        CESM history stream to filter by (e.g., 'h0', 'h1'). If None, no stream filtering is applied.
+        CESM history stream to filter by (e.g., 'h0', 'h1'). If None, no stream
+        filtering is applied.
     catalog_path : str | pathlib.Path | None, optional
-        Path to the intake-ESM catalog JSON file. If None, uses the default catalog path
-        constructed from ensemble name and filesystem configuration.
-    
+        Path to the intake-ESM catalog JSON file. If None, uses the default
+        catalog path constructed from ensemble name and filesystem configuration.
+
     Returns
     -------
     intake_esm.core.esm_datastore
         Subset of the catalog matching the query criteria.
-    
+
     Notes
     -----
     - The function validates the ensemble type before querying.
@@ -82,27 +91,39 @@ def query_catalog(
     - Variable names and member IDs are converted to canonical string lists.
     - The catalog supports derived variables through the DVR (Derived Variable Registry).
     """
-    validate_ensemble(ensemble)
+    validate_ensemble_kind(ensemble, kind)
+    if ensemble != "hadcm3":
+        assert component is not None, f"'{ensemble}' ensemble requires 'component'"
+        assert frequency is not None, f"'{ensemble}' ensemble requires 'frequency'"
 
     # Ensure varname and member are lists
     vars_to_load = _to_str_list(varname)
     if member is None:
-        mems_to_load = PISOM_MEMBERS
+        mems_to_load = PPE_MEMBERS[ensemble]
     else:
         mems_to_load = _to_str_list(member)
 
-    # Get the catalog path
     filesystem = config.get_filesystem()
-    catalog_root_path = config.get_catalog_root_path()
-    if not catalog_path:
-        catalog_path = (
-            catalog_root_path / f"{ensemble}_timeseries_catalog_{filesystem}.json"
-        )
+    catalog_root_path = Path(config.get_catalog_root_path())
+
+    # Check the catalog path if passed as an argument
+    if catalog_path:
+        catalog_path = Path(catalog_path)
+        # Try as absolute path first, then relative to catalog_root_path
+        if not catalog_path.exists():
+            catalog_path = catalog_root_path / catalog_path
+            if not catalog_path.exists():
+                raise FileNotFoundError(f"Catalog not found: {catalog_path}")
+    # Otherwise search for the catalog in the default directory, prioritizing timeseries
     else:
-        catalog_path = pathlib.Path(catalog_path)
-        assert (
-            catalog_path.suffix == ".json"
-        ), f"File must be a JSON file, got {catalog_path.suffix}"
+        catalog_path = None
+        for file_format in ("timeseries", "history"):
+            candidate = catalog_root_path / f"{kind}_{ensemble}_{file_format}_catalog_{filesystem}.json"
+            if candidate.exists():
+                catalog_path = candidate
+                break
+        if catalog_path is None:
+            raise FileNotFoundError(f"No catalog available at {catalog_root_path}")
 
     # Get the derived variable registry
     dvr = derived_variables.DVR
@@ -110,7 +131,11 @@ def query_catalog(
     # Open catalog
     cat = intake.open_esm_datastore(catalog_path, registry=dvr)
 
-    query = {"variable": vars_to_load, "component": component, "frequency": frequency}
+    # There is no component or frequency info for the HadCM3 PPE
+    if ensemble == "hadcm3":
+        query = {"variable": vars_to_load}
+    else:
+        query = {"variable": vars_to_load, "component": component, "frequency": frequency}
 
     # Parse the members
     if mems_to_load is not None:
@@ -130,14 +155,15 @@ def query_catalog(
 
 
 def load_output(
+    kind: Kind,
     ensemble: EnsembleType,
     varname: str | list[str],
-    component: str,
-    frequency: str,
-    member: str | int | list[str | int] | None = None,
-    catalog_path: str | pathlib.Path | None = None,
-    xarray_open_kwargs: dict | None = None,
-    chunks: dict | None = None,
+    component: Optional[str] = None,
+    frequency: Optional[str] = None,
+    member: Optional[str | int | list[str | int]] = None,
+    catalog_path: Optional[str | Path] = None,
+    xarray_open_kwargs: Optional[dict] = None,
+    chunks: Optional[dict] = None,
     preprocess: Callable[[xr.Dataset], xr.Dataset] | None = None,
 ) -> xr.Dataset:
     """
@@ -145,13 +171,16 @@ def load_output(
 
     Parameters
     ----------
-    ensemble : EnsembleType
+    kind : str
+        Kind of simulation ('coup', 'offl') for CESM PPEs or
+        ('control', 'a1b') for HadCM3 PPE.
+    ensemble : str
         Name of the ensemble to load data from.
     varname : str | list[str]
         Variable name(s) to load from the ensemble.
-    component : str
+    component : str, optional
         Model component (e.g., 'atm', 'lnd').
-    frequency : str
+    frequency : str, optional
         Temporal frequency of the data (e.g., 'month_1', 'day_1').
     member : str | int | list[str | int] | None, optional
         Single string or list of ensemble members to load. Can be specified as
@@ -165,7 +194,7 @@ def load_output(
         Chunk sizes for dask arrays (e.g., {'time': 12, 'lat': 180}).
     preprocess : Callable[[xr.Dataset], xr.Dataset] | None, optional
         Preprocessing function to apply to each dataset before concatenation.
-    
+
     Returns
     -------
     xr.Dataset
@@ -174,14 +203,20 @@ def load_output(
     Examples
     --------
     >>> data = load_output(
+    ...     kind="coup",
     ...     varname=["TREFHT", "LHFLX"],
     ...     ensemble="pisom",
     ...     component="atm",
     ...     frequency="month_1",
     ...     member=["d_max", "fff,min"]
     ... )
+    >>> data = load_output(
+    ...     kind="a1b",
+    ...     varname=["air_temperature", "surface_runoff_flux"],
+    ...     ensemble="hadcm3"
+    ... )
     """
-    validate_ensemble(ensemble)
+    validate_ensemble_kind(ensemble, kind)
 
     # Ensure varname is a list
     vars_to_load = _to_str_list(varname)
@@ -189,6 +224,7 @@ def load_output(
 
     # Query the catalog and get the corresponding esm_datastore object
     cat_subset = query_catalog(
+        kind=kind,
         ensemble=ensemble,
         varname=varname,
         component=component,
@@ -213,6 +249,8 @@ def load_output(
     def _preprocess(ds: xr.Dataset) -> xr.Dataset:
         if ensemble == "pisom":
             ds = _shift_time(ds).sel(time=slice("0050-01", "0184-12"))
+        if ensemble == "hadcm3":
+            ds = ds.rename_dims(latitude="lat", longitude="lon")
         if preprocess is not None:
             ds = preprocess(ds)
         return ds
@@ -226,7 +264,7 @@ def load_output(
     for var in vars_to_load:
         var_cat = cat_subset.search(variable=var)
 
-        ds_dict = var_cat.to_dataset_dict(
+        var_ds_dict = var_cat.to_dataset_dict(
             xarray_open_kwargs=open_kwargs,
             xarray_combine_by_coords_kwargs={"join": "outer"},
             preprocess=_preprocess,
@@ -235,20 +273,28 @@ def load_output(
         )
 
         # Combine all keys for this variable
-        var_ds = list(ds_dict.values())
-        if len(var_ds) == 0:
+        var_ds_list = list(var_ds_dict.values())
+        if len(var_ds_list) == 0:
             print(f"{var} not found")
-        elif len(var_ds) == 1:
-            datasets.append(var_ds[0])
         else:
             # >> This logic could be brittle. <<
             # If len(var_ds) > 1, this is due to multiple streams (h0 and h1) from
             # the same component containing the same variable and frequency. Since
             # it ~should~ be identical output from CESM, just select the first dataset.
-            datasets.append(var_ds[0])
+            var_ds = var_ds_list[0]
 
-            # var_ds_reset = [ds.reset_coords(drop=False) for ds in var_ds]
-            # datasets.append(xr.merge(var_ds_reset, join="outer", compat="no_conflicts"))
+            # Some ensemble-specific logic
+            if (ensemble == "hadcm3") and (var == "leaf_area_index"):
+                var_ds = var_ds.rename_vars(m01s19i014=var).rename_dims(
+                    pseudo_level="pft"
+                )
+            if (ensemble == "hadcm3") and (var == "pft_fraction"):
+                var_ds = var_ds.rename_vars(m01s19i013=var).rename_dims(
+                    pseudo_level="pft"
+                )
+
+            # Add variable to the list of datasets
+            datasets.append(var_ds)
 
     # Merge all variables together
     result = xr.merge(datasets, join="outer", compat="no_conflicts")

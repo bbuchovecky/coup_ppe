@@ -5,7 +5,7 @@ Tools for building intake-esm catalogs for CESM PPEs.
 from __future__ import annotations
 from typing import Optional
 from typing import Callable
-import pathlib
+from pathlib import Path
 import joblib
 from ecgtools import Builder
 
@@ -13,61 +13,13 @@ from xppe import daskhelper
 from xppe.catalog import parsers
 from xppe.access import config
 from xppe.metadata.conventions import (
-    EnsembleType, validate_ensemble,
-    FileFormat, validate_file_format,
-    Kind, validate_kind,
+    validate_ensemble_kind,
+    validate_file_format,
+    EnsembleType, Kind, FileFormat,
 )
 
-
-# Catalog configuration constants
-CATALOG_CONFIGS = {
-    "history": {
-        "depth": 3,
-        "exclude_patterns": ["*/proc/*", "*/rest/*"],
-        "groupby_attrs": ["component", "stream", "frequency"],
-        "aggregation": [
-            {
-                "type": "join_existing",
-                "attribute_name": "date",
-                "options": {
-                    "dim": "time",
-                    "coords": "minimal",
-                    "compat": "override",
-                },
-            },
-            {
-                "type": "join_new",
-                "attribute_name": "member",
-                "options": {
-                    "dim": "member",
-                    "coords": "minimal",
-                },
-            },
-        ],
-    },
-    "timeseries": {
-        "depth": 4,
-        "exclude_patterns": ["*/hist/*", "*/rest/*"],
-        "groupby_attrs": ["variable", "component", "stream", "frequency"],
-        "aggregation": [
-            {
-                "type": "union",
-                "attribute_name": "variable",
-                "options": {},
-            },
-            {
-                "type": "join_new",
-                "attribute_name": "member",
-                "options": {
-                    "dim": "member",
-                    "coords": "minimal",
-                },
-            },
-        ],
-    },
-}
-
-# Parser function mapping
+MODELS = config.get_models()
+PARSERS_CONFIG = config.get_parsers_config()
 PARSERS = {
     "pisom": {
         "history": parsers.parse_pisom_history,
@@ -75,6 +27,9 @@ PARSERS = {
     },
     "fhist": {
         "history": parsers.parse_fhist_history,
+    },
+    "hadcm3": {
+        "timeseries": parsers.parse_hadcm3,
     },
 }
 
@@ -93,16 +48,16 @@ def _get_parser(
 
 
 def _normalize_paths(
-    rootpath: str | pathlib.Path | list[str | pathlib.Path],
-) -> list[pathlib.Path]:
+    rootpath: str | Path | list[str | Path],
+) -> list[Path]:
     """Convert rootpath to list of Path objects."""
     if not isinstance(rootpath, list):
         rootpath = [rootpath]
-    return [pathlib.Path(p) for p in rootpath]
+    return [Path(p) for p in rootpath]
 
 
 def _create_catalog_builder(
-    paths: list[pathlib.Path],
+    paths: list[Path],
     cfg: dict,
     parser: Callable,
 ) -> Builder:
@@ -134,30 +89,31 @@ def build_catalog(
     kind: Kind,
     ensemble: EnsembleType,
     file_format: FileFormat,
-    rootpath: str | pathlib.Path | list[str | pathlib.Path],
-    outpath: str | pathlib.Path,
+    rootpath: str | Path | list[str | Path],
+    outpath: str | Path,
     tag: str = "",
     depth: Optional[int] = None,
-) -> pathlib.Path:
+) -> Path:
     """
     Build an intake-esm catalog for PPE output.
 
     Parameters
     ----------
     kind : str
-        Kind of simulation ('coup', 'offl').
+        Kind of simulation ('coup', 'offl') for CESM PPEs or
+        ('control', 'a1b') for HadCM3 PPE.
     ensemble : str
-        Ensemble name ('pisom', 'fhist', 'fssp370').
+        Ensemble name ('pisom', 'fhist', 'hadcm3').
     file_format : FileFormat
-        Format of data files to catalog ('history', 'timeseries')
+        Format of data files to catalog ('history', 'timeseries').
     rootpath : str | pathlib.Path | list[str | pathlib.Path]
-        Root path(s) to search for data files
+        Root path(s) to search for data files.
     outpath : pathlib.Path | str
-        Output directory path
+        Output directory path.
     tag : str, optional
-        Tag to append to catalog filename (default: "")
+        Tag to append to catalog filename (default: "").
     depth : int, optional
-        Directory depth to search (overrides config default)
+        Directory depth to search (overrides config default).
 
     Returns
     -------
@@ -171,12 +127,11 @@ def build_catalog(
     NotImplementedError
         If parser not available for ensemble/file_format combination
     """
-    validate_kind(kind)
-    validate_ensemble(ensemble)
+    validate_ensemble_kind(ensemble, kind)
     validate_file_format(file_format)
 
     # Get configuration and parser
-    cfg = CATALOG_CONFIGS[file_format].copy()
+    cfg = PARSERS_CONFIG[MODELS[ensemble]][file_format].copy()
     if depth is not None:
         cfg["depth"] = depth
 
@@ -184,7 +139,7 @@ def build_catalog(
     paths = _normalize_paths(rootpath)
 
     # Validate output path
-    outpath = pathlib.Path(outpath).resolve()
+    outpath = Path(outpath).resolve()
     if not outpath.exists():
         raise FileNotFoundError(f"Output directory does not exist: {outpath}")
 
@@ -219,26 +174,30 @@ def build_catalog_cli(
 ):
     """
     Build an intake-esm catalog for a PPE ensemble.
-    
+
     Parameters
     ----------
-    kind : str, optional
-        Kind of simulation ('coup' or 'offl')
+    kind : str
+        Kind of simulation ('coup', 'offl') for CESM PPEs or
+        ('control', 'a1b') for HadCM3 PPE.
     ensemble : str
-        PPE short name ('pisom' or 'fhist')
+        Ensemble name ('pisom', 'fhist', 'hadcm3').
     file_format : str
         Format of model output files ('history' or 'timeseries')
     dask_cluster : tuple, optional
-        (account, nworkers, nmem, walltime) for Dask cluster
+        (account, nworkers, nmem, walltime) for dask cluster
     """
     # Define paths
     filesystem = config.get_filesystem()
-    data_root_path = config.get_data_root_path(ensemble)
+    data_root_path = config.get_data_root_path(kind, ensemble)
     catalog_root_path = config.get_catalog_root_path()
 
     # Start Dask cluster if requested
     client, cluster = None, None
     if dask_cluster:
+        assert (
+            len(dask_cluster) == 4
+        ), "dask_cluster must contain (account, nworkers, nmem, walltime)"
         try:
             account, nworkers, nmem, walltime = dask_cluster
             client, cluster = daskhelper.create_dask_cluster(
@@ -249,7 +208,7 @@ def build_catalog_cli(
             )
         except KeyError:
             print("Unable to start a dask cluster, continuing without")
-    
+
     try:
         build_catalog(
             kind=kind,

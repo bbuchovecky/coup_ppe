@@ -1,10 +1,11 @@
-name: coup-ppe
+name: xppe
 channels:
   - conda-forge
 dependencies:
   - python>=3.11,<3.13
   - pip
   - pytest
+  - black
 
   # Core data cataloging
   - ecgtools
@@ -38,4 +39,3 @@ dependencies:
 
   - pip:
       - -e .
-      - black

@@ -4,13 +4,16 @@ Utilities to read and access configuration settings.
 
 from __future__ import annotations
 from typing import Optional
-import pathlib
+from pathlib import Path
 import yaml
-from xppe.metadata.conventions import validate_ensemble, validate_file_format
+from xppe.metadata.conventions import (
+    Kind, EnsembleType,
+    validate_ensemble, validate_file_format
+)
 
 
 # Use package location for root path instead of relative parents
-PACKAGE_ROOT = pathlib.Path(__file__).parent.parent.parent.parent
+PACKAGE_ROOT = Path(__file__).parent.parent.parent.parent
 CONFIG_PATH = PACKAGE_ROOT / "config.yml"
 
 
@@ -47,36 +50,55 @@ def get_file_formats() -> list[str]:
     return file_formats
 
 
-def get_data_root_path(ensemble: str, filesystem: Optional[str] = None) -> pathlib.Path:
+def get_models() -> dict:
+    """Get the model corresponding to each PPE."""
+    config = _load_config()
+    return config["MODELS"]
+
+
+def get_data_root_path(
+        kind: Kind,
+        ensemble: EnsembleType,
+        filesystem: Optional[str] = None
+    ) -> Path:
     """
     Get data root path for a specific ensemble and filesystem.
 
     Parameters
     ----------
+    kind : str
+        Kind of simulation ('coup', 'offl') for CESM PPEs or
+        ('control', 'a1b') for HadCM3 PPE.
     ensemble : str
-        Ensemble name ('pisom', 'fhist', 'fssp370')
+        Ensemble name ('pisom', 'fhist', 'hadcm3').
     filesystem str, optional
         Filesystem name (overrides config default)
     """
     config = _load_config()
     fs = filesystem or config["FILESYSTEM"]
-    data_path = config["DATA_ROOT_PATHS"][fs][ensemble]["coup"]
-    return PACKAGE_ROOT / pathlib.Path(data_path)
+    data_path = config["DATA_ROOT_PATHS"][fs][ensemble][kind]
+    return PACKAGE_ROOT / Path(data_path)
 
 
-def get_catalog_root_path() -> pathlib.Path:
+def get_catalog_root_path() -> Path:
     """Get the catalog root path from config.yml."""
     config = _load_config()
-    return PACKAGE_ROOT / pathlib.Path(config["CATALOG_ROOT_PATH"])
+    return PACKAGE_ROOT / Path(config["CATALOG_ROOT_PATH"])
 
 
-def get_crosswalk_root_path() -> pathlib.Path:
+def get_crosswalk_root_path() -> Path:
     """Get the crosswalk root path from config.yml."""
     config = _load_config()
-    return PACKAGE_ROOT / pathlib.Path(config["CROSSWALK_ROOT_PATH"])
+    return PACKAGE_ROOT / Path(config["CROSSWALK_ROOT_PATH"])
 
 
-def get_member_id_map_path() -> pathlib.Path:
+def get_member_id_map_path() -> Path:
     """Get the member ID map path from config.yml."""
     config = _load_config()
-    return PACKAGE_ROOT / pathlib.Path(config["MEMBER_ID_MAP_PATH"])
+    return PACKAGE_ROOT / Path(config["MEMBER_ID_MAP_PATH"])
+
+
+def get_parsers_config() -> dict:
+    """Get the parsers config dictionary."""
+    config = _load_config()
+    return config["PARSERS_CONFIG"]

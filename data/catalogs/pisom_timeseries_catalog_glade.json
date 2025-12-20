@@ -18,11 +18,15 @@
       "vocabulary": ""
     },
     {
-      "column_name": "date",
+      "column_name": "variable",
       "vocabulary": ""
     },
     {
       "column_name": "path",
+      "vocabulary": ""
+    },
+    {
+      "column_name": "variable_long_name",
       "vocabulary": ""
     },
     {
@@ -40,10 +44,6 @@
     {
       "column_name": "end",
       "vocabulary": ""
-    },
-    {
-      "column_name": "variable",
-      "vocabulary": ""
     }
   ],
   "assets": {
@@ -54,19 +54,16 @@
   "aggregation_control": {
     "variable_column_name": "variable",
     "groupby_attrs": [
+      "variable",
       "component",
       "stream",
       "frequency"
     ],
     "aggregations": [
       {
-        "type": "join_existing",
-        "attribute_name": "date",
-        "options": {
-          "dim": "time",
-          "coords": "minimal",
-          "compat": "override"
-        }
+        "type": "union",
+        "attribute_name": "variable",
+        "options": {}
       },
       {
         "type": "join_new",
@@ -78,9 +75,9 @@
       }
     ]
   },
-  "id": "pisom_history_catalog_glade",
+  "id": "pisom_timeseries_catalog_glade",
   "description": null,
   "title": null,
-  "last_updated": "2025-12-18T04:29:25Z",
-  "catalog_file": "file:///glade/u/home/bbuchovecky/coup_ppe/src/coup_ppe/catalog/pisom_history_catalog_glade.csv"
+  "last_updated": "2025-12-18T00:01:18Z",
+  "catalog_file": "file:///glade/u/home/bbuchovecky/xppe/data/catalog/pisom_timeseries_catalog_glade.csv"
 }

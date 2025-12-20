@@ -8,8 +8,8 @@ version = '0.1.0'
 requires-python = '>=3.10'
 
 [project.scripts]
-xppe-build-catalog xppe.cli:build_catalog'
-xppe-build-member-id-map xppe.cli:build_member_id_map'
+xppe-build-catalog = 'xppe.cli:build_catalog'
+xppe-build-member-id-map = 'xppe.cli:build_member_id_map'
 
 [tool.setuptools]
 package-dir = {'' = 'src'}

@@ -1,7 +1,11 @@
 # Place for storing information specific to the filesystem
 FILESYSTEM: 'glade'
-ENSEMBLES: ['pisom', 'fhist', 'ssp370']
+ENSEMBLES: ['pisom', 'fhist', 'hadcm3']
 FILE_FORMATS: ['history', 'timeseries']
+MODELS:
+  pisom: 'cesm2'
+  fhist: 'cesm2'
+  hadcm3: 'hadcm3'
 DATA_ROOT_PATHS:
   glade:
     pisom:
@@ -10,13 +14,52 @@ DATA_ROOT_PATHS:
     fhist: 
       coup: '/glade/campaign/univ/uwas0155/...'
       offl: '/glade/campaign/univ/uwas0155/...'
-  daisy:
-    pisom:
-      coup: ''
-      offl: ''
-    fhist:
-      coup: ''
-      offl: ''
-CATALOG_ROOT_PATH: 'data/catalog'
-CROSSWALK_ROOT_PATH: 'data/crosswalk'
+    hadcm3:
+      control: '/glade/campaign/univ/uwas0155/hadcm3/control'
+      a1b: '/glade/campaign/univ/uwas0155/hadcm3/a1b'
+CATALOG_ROOT_PATH: 'data/catalogs'
+CROSSWALK_ROOT_PATH: 'data/crosswalks'
 MEMBER_ID_MAP_PATH: 'src/xppe/metadata/member_id_map.yml'
+PARSERS_CONFIG:
+  cesm2:
+    history:
+      depth: 3
+      exclude_patterns: ["*/proc/*", "*/rest/*"]
+      groupby_attrs: ["component", "stream", "frequency"]
+      aggregation:
+        - type: 'join_existing'
+          attribute_name: 'date'
+          options:
+            dim: 'time'
+            coords: 'minimal'
+            compat: 'override'
+        - type: 'join_new'
+          attribute_name: 'member'
+          options:
+            dim: 'member'
+            coords: 'minimal'
+    timeseries:
+      depth: 4
+      exclude_patterns: ["*/hist/*", "*/rest/*"]
+      groupby_attrs: ["variable", "component", "stream", "frequency"]
+      aggregation:
+        - type: 'union'
+          attribute_name: 'variable'
+        - type: 'join_new'
+          attribute_name: 'member'
+          options:
+            dim: 'member'
+            coords: 'minimal'
+  hadcm3:
+    timeseries:
+      depth: 0
+      exclude_patterns: []
+      groupby_attrs: ["variable", "frequency"]
+      aggregation:
+        - type: 'union'
+          attribute_name: 'variable'
+        - type: 'join_new'
+          attribute_name: 'member'
+          options:
+            dim: 'member'
+            coords: 'minimal'

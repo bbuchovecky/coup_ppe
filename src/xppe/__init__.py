@@ -5,7 +5,6 @@ coup_ppe: Tools for PPE analysis.
 from xppe import access
 from xppe import catalog
 from xppe import stats
-from xppe import parallel
 from xppe import metadata
 from xppe.access.load import load_output, query_catalog
 
@@ -16,7 +15,6 @@ __all__ = [
     "access",
     "catalog",
     "stats",
-    "parallel",
     "metadata",
     # Common functions
     "load_output",
