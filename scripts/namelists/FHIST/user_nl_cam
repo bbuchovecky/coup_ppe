@@ -1,24 +1,17 @@
 !----History files (h0): monthly output at grid level
-! all default output variables, excluding extraneous vertically resolved variables
-!!nhtfrq(1)=0
-!!mfilt(1)=1
-
-! Exclude some aerosol, cloud droplet, and wet removal scheme variables
-!!fexcl1 = 'bc_a1','bc_a4','bc_c1','bc_c4','dst_a1','dst_a2','dst_a3','dst_c1','dst_c2','dst_c3','ncl_a1','ncl_a2','ncl_a3','ncl_c1','ncl_c2','ncl_c3','num_a1','num_a2','num_a3','num_a4','num_c1','num_c2','num_c3','num_c4','pom_a1','pom_a4','pom_c1','pom_c4','so4_a1','so4_a2','so4_a3','so4_c1','so4_c2','so4_c3','soa_a1','soa_a2','soa_c1','soa_c2','ANRAIN','AREI','AREL','AWNC','AWNI','ADRAIN','ADSNOW','ANSNOW','NUMICE','NUMLIQ','NUMRAI','NUMSNO','DTWR_H2O2','DTWR_H2SO4','DTWR_SO2','VQ','UQ','Q850','Q700','Q500','T850','T700','T500','Z850','Z700','Z500','V850','V700','V500','V200','U850','U700','U500','V200'
-
-!----History files (h0): monthly output at grid level
-! all default output variables, excluding extraneous vertically resolved variables
-nhtfrq=0
-mfilt=1
+! all default output variables (manually added), excluding extraneous vertically resolved variables
+empty_htapes = .true.
+nhtfrq(1)=0
+mfilt(1)=1
 fincl1 = 'AEROD_v','AODABS','AODDUST','AODDUST1','AODDUST2','AODDUST3','AODVIS','AQRAIN','AQSNOW','AQSO4_H2O2','AQSO4_O3','CCN3','CDNUMC','CLDHGH','CLDICE','CLDLIQ','CLDLOW','CLDMED','CLDTOT','CLOUD','CLOUDCOVER_CLUBB','CLOUDFRAC_CLUBB','CONCLD','DCQ','DF_H2O2','DF_H2SO4','DF_SO2','DMS','DMS_SRF','DTCOND','DTV','FICE','FLDS','FLNS','FLNSC','FLNT','FLNTC','FLNTCLR','FLUT','FLUTC','FREQCLR','FREQI','FREQL','FREQR','FREQS','FSDS','FSDSC','FSNS','FSNSC','FSNT','FSNTC','FSNTOA','FSNTOAC','FSUTOA','H2O','H2O2','H2O2_SRF','H2O_CLXF','H2O_CMXF','H2O_SRF','H2SO4','H2SO4_SRF','H2SO4_sfgaex1','ICEFRAC','ICIMR','ICWMR','IWC','LANDFRAC','LHFLX','LWCF','O3','O3colAbove','OCNFRAC','OMEGA','OMEGAT','PBLH','PHIS','PRECC','PRECL','PRECSC','PRECSL','PS','PSL','Q','QFLX','QREFHT','QRL','QRS','QT','RAINQM','RCMINLAYER_CLUBB','RCMTEND_CLUBB','RCM_CLUBB','RELHUM','RELVAR','RHO_CLUBB','RIMTEND_CLUBB','RTP2_CLUBB','RTPTHLP_CLUBB','RVMTEND_CLUBB','SFDMS','SFH2O2','SFH2SO4','SFSO2','SFSOAG','SFbc_a1','SFbc_a4','SFdst_a1','SFdst_a2','SFdst_a3','SFncl_a1','SFncl_a2','SFncl_a3','SFnum_a1','SFnum_a2','SFnum_a3','SFnum_a4','SFpom_a1','SFpom_a4','SFso4_a1','SFso4_a2','SFso4_a3','SFsoa_a1','SFsoa_a2','SHFLX','SL','SNOWHICE','SNOWHLND','SNOWQM','SO2','SO2_CLXF','SO2_CMXF','SO2_SRF','SOAG','SOAG_SRF','SOLIN','SSAVIS','STEND_CLUBB','SWCF','T','TAUBLJX','TAUBLJY','TAUGWX','TAUGWY','TAUX','TAUY','TGCLDCWP','TGCLDIWP','TGCLDLWP','THLP2_CLUBB','TMQ','TREFHT','TS','TSMN','TSMX','U','U10','UM_CLUBB','UP2_CLUBB','UPWP_CLUBB','UTEND_CLUBB','UU','V','VD01','VM_CLUBB','VP2_CLUBB','VPWP_CLUBB','VT','VTEND_CLUBB','VU','VV','WD_H2O2','WD_H2SO4','WD_SO2','WP2_CLUBB','WP3_CLUBB','WPRCP_CLUBB','WPRTP_CLUBB','WPTHLP_CLUBB','WPTHVP_CLUBB','WSUB','Z3','ZM_CLUBB','ZT_CLUBB','bc_a1DDF','bc_a1SFWET','bc_a1_SRF','bc_a4DDF','bc_a4SFWET','bc_a4_CLXF','bc_a4_CMXF','bc_a4_SRF','bc_c1DDF','bc_c1SFWET','bc_c4DDF','bc_c4SFWET','dst_a1DDF','dst_a1SF','dst_a1SFWET','dst_a1_SRF','dst_a2DDF','dst_a2SF','dst_a2SFWET','dst_a2_SRF','dst_a3DDF','dst_a3SF','dst_a3SFWET','dst_a3_SRF','dst_c1DDF','dst_c1SFWET','dst_c2DDF','dst_c2SFWET','dst_c3DDF','dst_c3SFWET','ncl_a1DDF','ncl_a1SF','ncl_a1SFWET','ncl_a1_SRF','ncl_a2DDF','ncl_a2SF','ncl_a2SFWET','ncl_a2_SRF','ncl_a3DDF','ncl_a3SF','ncl_a3SFWET','ncl_a3_SRF','ncl_c1DDF','ncl_c1SFWET','ncl_c2DDF','ncl_c2SFWET','ncl_c3DDF','ncl_c3SFWET','num_a1DDF','num_a1SF','num_a1SFWET','num_a1_CLXF','num_a1_CMXF','num_a1_SRF','num_a2DDF','num_a2SF','num_a2SFWET','num_a2_CLXF','num_a2_CMXF','num_a2_SRF','num_a3DDF','num_a3SF','num_a3SFWET','num_a3_SRF','num_a4DDF','num_a4SFWET','num_a4_CLXF','num_a4_CMXF','num_a4_SRF','num_c1SFWET','num_c2SFWET','num_c3SFWET','num_c4SFWET','pom_a1DDF','pom_a1SFWET','pom_a1_SRF','pom_a4DDF','pom_a4SFWET','pom_a4_CLXF','pom_a4_CMXF','pom_a4_SRF','pom_c1DDF','pom_c1SFWET','pom_c4DDF','pom_c4SFWET','so4_a1DDF','so4_a1SFWET','so4_a1_CLXF','so4_a1_CMXF','so4_a1_SRF','so4_a1_sfgaex1','so4_a2DDF','so4_a2SFWET','so4_a2_CLXF','so4_a2_CMXF','so4_a2_SRF','so4_a2_sfgaex1','so4_a2_sfnnuc1','so4_a3DDF','so4_a3SFWET','so4_a3_SRF','so4_a3_sfgaex1','so4_c1AQH2SO4','so4_c1AQSO4','so4_c1DDF','so4_c1SFWET','so4_c2AQH2SO4','so4_c2AQSO4','so4_c2DDF','so4_c2SFWET','so4_c3AQH2SO4','so4_c3AQSO4','so4_c3DDF','so4_c3SFWET','soa_a1DDF','soa_a1SFWET','soa_a1_SRF','soa_a1_sfgaex1','soa_a2DDF','soa_a2SFWET','soa_a2_SRF','soa_a2_sfgaex1','soa_c1DDF','soa_c1SFWET','soa_c2DDF','soa_c2SFWET',
 
 !----History files (h1): additional user-specified monthly output at grid level
-nhtfrq2=0
-mfilt2=1
-fincl2 = 'SST',    'VQ','UQ','uIVT','vIVT',    'Q850','Q700','Q500',    'T850','T700','T500',    'Z850','Z700','Z500',    'V850','V700','V500','V200',    'U850','U700','U500','V200'
+nhtfrq(2)=0
+mfilt(2)=1
+fincl2 = 'SST',    'VQ','UQ','uIVT','vIVT',    'Q850','Q700','Q500',    'T850','T700','T500',    'Z850','Z700','Z500',    'V850','V700','V500','V200',    'U850','U700','U500','U200'
 
 !----History files (h2): daily output at grid level
-nhtfrq3=-24
-mfilt3=365
+nhtfrq(3)=-24
+mfilt(3)=365
 fincl3 = 'FLDS','FLNS','FSDS','FSNS','LHFLX','SHFLX',   'PRECT','PRECC','PRECL','QREFHT','RHREFHT','uIVT','vIVT',    'TREFHT','TREFHTMN','TREFHTMX','TS','TSMN','TSMX',    'Q850','Q700','Q500',    'T850','T700','T500',    'Z850','Z700','Z500',    'V850','V700','V500','V200',    'U850','U700','U500','U200',    'FLUT','CLDTOT','CLDLOW','OMEGA500',    'PBLH','PS','PSL'
 

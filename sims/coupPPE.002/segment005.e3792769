@@ -1,7 +1,0 @@
-Traceback (most recent call last):
-  File "/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts/checkIHIST.py", line 9, in <module>
-    from dask_jobqueue import PBSCluster
-ModuleNotFoundError: No module named 'dask_jobqueue'
-submit_jobs case.run
-Submit job case.run
-Submit job case.st_archive

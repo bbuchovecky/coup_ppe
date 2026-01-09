@@ -27,7 +27,7 @@ LINIT="${LINITCASE}.clm2.r.1950-01-01-00000.nc"
 
 # redirect output from this script to a log file
 FILENAME="$(pwd)/$(basename "${0%.*}")"
-exec > >(tee -a "${FILENAME}.log") 2>&1
+exec > >(tee -a "${FILENAME}.${MEM}.log") 2>&1
 echo $FILENAME
 echo $USER
 date +%y-%m-%dT%H:%M:%S
@@ -79,7 +79,6 @@ echo -e "\nfinidat='${finidat}'" >> user_nl_clm
 ./xmlchange RUN_REFDATE=$REFDATE
 ./xmlchange GET_REFCASE="True"
 
-
 ./xmlchange STOP_OPTION="nyears"
 ./xmlchange STOP_N=5
 ./xmlchange REST_OPTION="nyears"
@@ -92,4 +91,4 @@ echo -e "\nfinidat='${finidat}'" >> user_nl_clm
 ./case.submit
 
 
-mv "${FILENAME}.log" .
+mv "${FILENAME}.${MEM}.log" .

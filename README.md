@@ -6,7 +6,7 @@ Code and documentation for coupled CESM PPEs under transient forcings from the h
 Adapted from Julius Busecke's [`cookiecuttter-science-project`](https://github.com/jbusecke/cookiecutter-science-project) and Claire Zarakas's [`coupled_PPE`](https://github.com/czarakas/coupled_PPE).
 
 
-```
+<!-- ```
 ├── README.md
 ├── LICENSE
 ├── environment.yml                <- Conda environment file. Create environment with
@@ -58,4 +58,4 @@ Adapted from Julius Busecke's [`cookiecuttter-science-project`](https://github.c
         ├── interim
         ├── processed
         └── raw
-```
+``` -->
