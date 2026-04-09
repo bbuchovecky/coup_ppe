@@ -1,0 +1,9 @@
+#!/bin/bash
+#PBS -N checkOFFLHIST
+#PBS -q develop
+#PBS -l walltime=00:30:00
+#PBS -A UWAS0155
+#PBS -k eod
+#PBS -l select=1:ncpus=2:mem=8GB
+
+/glade/work/bbuchovecky/miniforge3/envs/data-sci-py312/bin/python checkOFFLHIST.py $MEM

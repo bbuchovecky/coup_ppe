@@ -41,6 +41,9 @@ hist_fincl3 += 'FCEV','FCTR','FGEV'
 ! Hydrologic variability and extremes
 hist_fincl3 += 'QOVER','QRUNOFF','TWS'
 
+! Total and exposed leaf area (added for future and offline runs only)
+hist_fincl3 += 'TLAI','ELAI'
+
 use_init_interp=.true.
 
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MEM=$1
-CASENAME="f.e21.FHIST_BGC.f19_f19_mg17.historical.${MEM}"
+CASENAME="f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.${MEM}"
 PROJECT=UWAS0155
 
 WDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/sims/${MEM}"
@@ -9,17 +9,16 @@ NAMELISTS="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts/namelists"
 PARAMFILES="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/paramfiles"
 SOURCEMODS="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/srcmods/perturbed"
 
-COMPSET=HIST_CAM60_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_CISM2%NOEVOLVE_SWAV
+COMPSET=SSP370_CAM60_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_CISM2%NOEVOLVE_SWAV
 GRID=f19_f19_mg17
 CESMROOT="/glade/u/home/bbuchovecky/cesm_source/cesm2.1.5"
 
-REFCASE="f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.cplhist"
-REFDIR="/glade/derecho/scratch/bbuchovecky/archive/${REFCASE}/rest/1950-01-01-00000"
-REFDATE="1950-01-01"
+SSTICE="/glade/campaign/univ/uwas0155/ppe/docn_sst/..."
 
-LINITCASE="IHistClm50Bgc.CPLHIST.historical.${MEM}.IHIST"
-HDIR="/glade/derecho/scratch/bbuchovecky/archive/${LINITCASE}/rest/1950-01-01-00000"
-LINIT="${LINITCASE}.clm2.r.1950-01-01-00000.nc"
+REFCASE="f.e21.FHIST_BGC.f19_f19_mg17.historical.${MEM}"
+REFDIR="/glade/derecho/scratch/bbuchovecky/archive/${REFCASE}/rest/2015-01-01-00000"
+LINIT="${REFCASE}.clm2.r.2015-01-01-00000.nc"
+REFDATE="2015-01-01-00000"
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -66,8 +65,16 @@ echo -e "\nparamfile = \"${PARAMFILES}/${MEM}.nc\"" >> user_nl_clm
 
 
 # apply land initial conditions from spinup
-finidat="${HDIR}/${LINIT}"
+finidat="${REFDIR}/${LINIT}"
 echo -e "\nfinidat='${finidat}'" >> user_nl_clm
+
+
+# point to custom prescribed SST file
+./xmlchange DOCN_MODE=prescribed
+./xmlchange SSTICE_DATA_FILENAME=$SSTICE
+./xmlchange SSTICE_YEAR_START=2015
+./xmlchange SSTICE_YEAR_END=2100
+./xmlchange SSTICE_YEAR_ALIGN=2015
 
 
 ./xmlchange RUN_TYPE=hybrid
@@ -83,7 +90,7 @@ echo -e "\nfinidat='${finidat}'" >> user_nl_clm
 ./xmlchange STOP_N=5
 ./xmlchange REST_OPTION="nyears"
 ./xmlchange REST_N=5
-./xmlchange RESUBMIT=12
+./xmlchange RESUBMIT=14
 ./xmlchange JOB_WALLCLOCK_TIME=08:00:00 --subgroup case.run
 
 

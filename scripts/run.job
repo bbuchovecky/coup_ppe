@@ -5,6 +5,7 @@
 #PBS -A UWAS0155
 #PBS -k eod
 #PBS -l select=1:ncpus=5
+#PBS -o job_files/
 
 # ---------------------------------------------------------
 

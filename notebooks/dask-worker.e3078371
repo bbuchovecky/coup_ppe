@@ -1,0 +1,25 @@
+/glade/u/home/bbuchovecky/.bashrc: line 45: bind: warning: line editing not enabled
+/glade/u/home/bbuchovecky/.bashrc: line 45: bind: warning: line editing not enabled
+2026-04-08 18:16:25,864 - distributed.nanny - INFO -         Start Nanny at: 'tcp://128.117.208.173:37999'
+2026-04-08 18:16:26,544 - distributed.worker - INFO -       Start worker at: tcp://128.117.208.173:35761
+2026-04-08 18:16:26,545 - distributed.worker - INFO -          Listening to: tcp://128.117.208.173:35761
+2026-04-08 18:16:26,545 - distributed.worker - INFO -           Worker name:               PBSCluster-1
+2026-04-08 18:16:26,545 - distributed.worker - INFO -          dashboard at:      128.117.208.173:46141
+2026-04-08 18:16:26,545 - distributed.worker - INFO - Waiting to connect to: tcp://128.117.211.161:35975
+2026-04-08 18:16:26,545 - distributed.worker - INFO - -------------------------------------------------
+2026-04-08 18:16:26,545 - distributed.worker - INFO -               Threads:                          1
+2026-04-08 18:16:26,545 - distributed.worker - INFO -                Memory:                  14.90 GiB
+2026-04-08 18:16:26,545 - distributed.worker - INFO -       Local Directory: /glade/derecho/scratch/bbuchovecky/tmp/dask-scratch-space/worker-mn6v2fiy
+2026-04-08 18:16:26,545 - distributed.worker - INFO - -------------------------------------------------
+2026-04-08 18:16:26,554 - distributed.worker - INFO - Starting Worker plugin shuffle
+2026-04-08 18:16:26,555 - distributed.worker - INFO -         Registered to: tcp://128.117.211.161:35975
+2026-04-08 18:16:26,555 - distributed.worker - INFO - -------------------------------------------------
+2026-04-08 18:16:26,555 - distributed.core - INFO - Starting established connection to tcp://128.117.211.161:35975
+2026-04-08 18:41:51,986 - distributed.core - INFO - Connection to tcp://128.117.211.161:35975 has been closed.
+2026-04-08 18:41:51,988 - distributed.worker - INFO - Stopping worker at tcp://128.117.208.173:35761. Reason: worker-handle-scheduler-connection-broken
+2026-04-08 18:41:51,991 - distributed.nanny - INFO - Closing Nanny gracefully at 'tcp://128.117.208.173:37999'. Reason: worker-handle-scheduler-connection-broken
+2026-04-08 18:41:51,991 - distributed.worker - INFO - Removing Worker plugin shuffle
+2026-04-08 18:41:51,997 - distributed.nanny - INFO - Worker closed
+2026-04-08 18:41:54,857 - distributed.nanny - INFO - Closing Nanny at 'tcp://128.117.208.173:37999'. Reason: nanny-close-gracefully
+2026-04-08 18:41:54,857 - distributed.nanny - INFO - Nanny at 'tcp://128.117.208.173:37999' closed.
+2026-04-08 18:41:54,858 - distributed.dask_worker - INFO - End worker

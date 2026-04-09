@@ -1,28 +1,27 @@
 #!/bin/bash
 
 MEM=$1
-CASENAME="i.e21.CPLHIST_BGC.f19_f19_mg17.historical.${MEM}.IHIST"
+CASENAME="i.e21.CPLHIST_BGC.f19_f19_mg17.historical.${MEM}"
 PROJECT=UWAS0155
 
-SDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts"
-WDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/sims/${MEM}"
-ARCHIVE="/glade/derecho/scratch/bbuchovecky/archive"
-NAMELISTS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts/namelists"
-NAMELISTMODS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/nlmods"
-PARAMFILES="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/paramfiles"
-SOURCEMODS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/srcmods/perturbed"
+WDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/sims/${MEM}"
+NAMELISTS="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts/namelists"
+PARAMFILES="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/paramfiles"
+SOURCEMODS="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/srcmods/perturbed"
 
 COMPSET=HIST_DATM%CPLHIST_CLM50%BGC-CROP_SICE_SOCN_MOSART_CISM2%NOEVOLVE_SWAV
 GRID=f19_f19_mg17
 CESMROOT="/glade/u/home/bbuchovecky/cesm_source/cesm2.1.5"
 
-REFCASE="I1850Clm50Bgc.CPLHIST.historical.${MEM}.IHIST"
+REFCASE="IHistClm50Bgc.CPLHIST.historical.${MEM}.IHIST"
+REFDATE="1950-01-01"
+REFDIR="/glade/derecho/scratch/bbuchovecky/archive/${REFCASE}/rest/${REFDATE}-00000"
 
 CPLHIST_CASE="f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.cplhist"
 CPLHIST_DIR="/glade/derecho/scratch/bbuchovecky/archive/${CPLHIST_CASE}/cpl/proc/"
 CPLHIST_YR_ALIGN="1950"
 CPLHIST_YR_START="1950"
-CPLHIST_YR_END="2015"
+CPLHIST_YR_END="2014"
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -48,7 +47,7 @@ cd $caseroot
 
 
 # apply sourcemods for history fields
-cp "${SOURCEMODS}/all/"* ./SourceMods/src.clm/
+cp "${SOURCEMODS}/all/clm/"* ./SourceMods/src.clm/
 
 
 # apply sourcemods for parameter change
@@ -67,25 +66,21 @@ cat "${NAMELISTMODS}/${MEM}.txt" >> user_nl_clm
 echo -e "\nparamfile = \"${PARAMFILES}/${MEM}.nc\"" >> user_nl_clm
 
 
-./xmlchange JOB_PRIORITY="regular"
 ./xmlchange RUN_TYPE=hybrid
 ./xmlchange PROJECT=$PROJECT
+./xmlchange JOB_PRIORITY="regular"
 ./xmlchange RUN_STARTDATE="1950-01-01"
+./xmlchange RUN_REFCASE=$REFCASE
+./xmlchange RUN_REFDIR=$REFDIR
+./xmlchange RUN_REFDATE=$REFDATE
+./xmlchange GET_REFCASE="True"
+
 ./xmlchange STOP_OPTION="nyears"
 ./xmlchange STOP_N=65
 ./xmlchange REST_OPTION="nyears"
-./xmlchange REST_N=65
-./xmlchange RESUBMIT=1
-./xmlchange JOB_WALLCLOCK_TIME="04:30:00" --subgroup case.run
-
-
-# finding the latest restart from IHIST
-# this code is likely very brittle
-./xmlchange RUN_REFCASE=$REFCASE
-./xmlchange GET_REFCASE="True"
-./xmlchange RUN_REFDIR="${ARCHIVE}/${REFCASE}/rest/1950-01-01-00000"
-./xmlchange RUN_REFDATE="1950-01-01"
-
+./xmlchange REST_N=5
+./xmlchange RESUBMIT=0
+./xmlchange JOB_WALLCLOCK_TIME="06:00:00" --subgroup case.run
 
 ./xmlchange DATM_MODE="CPLHIST"
 ./xmlchange DATM_PRESAERO="cplhist"
@@ -98,10 +93,6 @@ echo -e "\nparamfile = \"${PARAMFILES}/${MEM}.nc\"" >> user_nl_clm
 
 
 ./case.build
+./case.submit
+
 mv "${FILENAME}.log" .
-
-
-cd $WDIR
-echo $CASENAME>case.txt
-rm commands.txt
-echo "${SDIR}/setupFHIST.sh ${MEM}"> commands.txt

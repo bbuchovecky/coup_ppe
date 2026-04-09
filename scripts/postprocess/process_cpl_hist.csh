@@ -10,6 +10,8 @@
 # This script takes the raw coupler output and formats it so that the coupler output can be used to
 # force an offline land-only simulation.
 
+# Use with batch_years.sh
+
 module load nco
 
 set CASENAME=f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.cplhist

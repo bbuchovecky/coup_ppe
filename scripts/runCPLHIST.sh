@@ -7,10 +7,10 @@ MEM="coupPPE.cplhist"
 CASENAME="f.e21.FHIST_BGC.f19_f19_mg17.historical.${MEM}"
 PROJECT=UWAS0155
 
-WDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/sims/${MEM}"
-NAMELISTS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts/namelists"
-PARAMFILES="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/paramfiles"
-SOURCEMODS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/srcmods/perturbed"
+WDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/sims/${MEM}"
+NAMELISTS="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts/namelists"
+PARAMFILES="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/paramfiles"
+SOURCEMODS="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/srcmods/perturbed"
 
 COMPSET=HIST_CAM60_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_CISM2%NOEVOLVE_SWAV
 GRID=f19_f19_mg17

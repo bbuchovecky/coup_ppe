@@ -12,12 +12,12 @@ export DOUT_S_ROOT="/glade/derecho/scratch/${USER}/archive"
 export CASEROOT="/glade/derecho/scratch/${USER}/postp"
 
 # Custom xml timeseries settings
-TIMESERIES_XML="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts/postprocess/env_timeseries_FHIST_BGC.xml"
+TIMESERIES_XML="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts/postprocess/env_timeseries_FHIST_BGC.xml"
 
 # Case names
 CASEPREFIX="f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE"
-MEMBERS=(001 002 003 004 005 006 007 008 009 010 011 012 013 014 015 016 017 018 019 020 021 022 023 024 025 026 027 028)
-# MEMBERS=(000)
+# MEMBERS=(000 001 002 003 004 005 006 007 008 009 010 011 012 013 014 015 016 017 018 019 020 021 022 023 024 025 026 027 028)
+MEMBERS=(cplhist)
 
 for MEM in "${MEMBERS[@]}"; do
 
@@ -84,7 +84,7 @@ for MEM in "${MEMBERS[@]}"; do
     sed -i "s|#PBS -N timeseries|#PBS -N timeseries.${MEM}|" timeseries
 	sed -i 's|#PBS -q regular|#PBS -q main|' timeseries
 	sed -i 's|#PBS -A None|#PBS -A UWAS0155|' timeseries
-    sed -i 's|#PBS -l walltime=12:00:00|#PBS -l walltime=01:00:00|' timeseries
+    sed -i 's|#PBS -l walltime=12:00:00|#PBS -l walltime=02:00:00|' timeseries
     echo "> finished modifying the timeseries run script"
 
     qsub timeseries
