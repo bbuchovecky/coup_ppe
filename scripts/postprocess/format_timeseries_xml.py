@@ -10,7 +10,7 @@ import shutil
 # CASENUM = "000"
 # CASE = f"{CASEPREFIX}.{CASETYPE}.{CASENUM}"
 
-CASE = "f.e22.FHIST_BGC.f19_f17_mg17.coupPPE-hist.000"
+CASE = "f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000"
 POSTP_ROOT = f"/glade/derecho/scratch/bbuchovecky/postp/{CASE}/postprocess"
 
 TIME_PERIOD = "years"
@@ -30,7 +30,7 @@ COMPONENTS = {
 
 HISTORY = {
     "atm": {
-        "h0": ["month_1", "TRUE"],
+        "h0": ["month_1", "FALSE"],
         "h1": ["month_1", "FALSE"],
         "h2": ["day_1", "FALSE"],
         },
@@ -40,7 +40,7 @@ HISTORY = {
         "h2": ["day_1", "FALSE"],
         },
     "rof": {
-        "h0": ["month_1", "FALSE"],
+        "h0": ["month_1", "TRUE"],
         },
     "glc": {
         "h": ["year_1", "FALSE"],
@@ -182,4 +182,3 @@ with open("env_timeseries_coupPPE.xml", "w", encoding="utf-8") as f:
 
     f.write('</components>\n')
     f.write('</config_definition>')
-
