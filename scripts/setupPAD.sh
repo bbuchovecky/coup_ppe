@@ -1,15 +1,19 @@
 #!/bin/bash
 
+set -e  # exit on first error
+set -u  # exit if undefined variable is used
+
 MEM=$1
 CLONENAME="I1850Clm50Bgc.CPLHIST.historical.${MEM}.AD"
 CASENAME="I1850Clm50Bgc.CPLHIST.historical.${MEM}.pAD"
 PROJECT=UWAS0155
 
-SDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts"
-WDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/sims/${MEM}"
+SDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts"
+WDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/sims/${MEM}"
 ARCHIVE="/glade/derecho/scratch/bbuchovecky/archive"
-NAMELISTS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts/namelists"
-PARAMFILES="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/paramfiles"
+NAMELISTS="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts/namelists"
+NAMELISTMODS="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/nlmods"  # BGB: fixed 04/30/26, only maximum_leaf_wetted_fraction is affected
+PARAMFILES="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/paramfiles"
 
 CESMROOT="/glade/u/home/bbuchovecky/cesm_source/cesm2.1.5"
 

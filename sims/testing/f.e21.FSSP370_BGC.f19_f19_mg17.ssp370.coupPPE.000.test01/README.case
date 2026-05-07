@@ -1,0 +1,42 @@
+2026-04-30 22:41:12: ./create_newcase --case /glade/u/home/bbuchovecky/projects/coup_ppe/sims/testing/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01 --compset SSP370_CAM60_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_CISM2%NOEVOLVE_SWAV --res f19_f19_mg17 --project UWAS0155 --mach derecho --run-unsupported
+ ---------------------------------------------------
+2026-04-30 22:41:12: Compset longname is SSP370_CAM60_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_CISM2%NOEVOLVE_SWAV
+ ---------------------------------------------------
+2026-04-30 22:41:12: Compset specification file is /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/components/cam//cime_config/config_compsets.xml
+ ---------------------------------------------------
+2026-04-30 22:41:12: Pes     specification file is /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/components/cam//cime_config/config_pes.xml
+ ---------------------------------------------------
+2026-04-30 22:41:12: Forcing is CMIP6 SSP3-7.0 forcing
+ ---------------------------------------------------
+2026-04-30 22:41:12: Using None coupler instances
+ ---------------------------------------------------
+2026-04-30 22:41:12: Component ATM is CAM cam6 physics:
+ ---------------------------------------------------
+2026-04-30 22:41:12: ATM_GRID is 1.9x2.5
+ ---------------------------------------------------
+2026-04-30 22:41:12: Component LND is clm5.0:BGC (vert. resol. CN and methane) with prognostic crop:
+ ---------------------------------------------------
+2026-04-30 22:41:12: LND_GRID is 1.9x2.5
+ ---------------------------------------------------
+2026-04-30 22:41:12: Component ICE is Sea ICE (cice) model version 5 :prescribed cice
+ ---------------------------------------------------
+2026-04-30 22:41:12: ICE_GRID is 1.9x2.5
+ ---------------------------------------------------
+2026-04-30 22:41:12: Component OCN is DOCN   prescribed ocean mode
+ ---------------------------------------------------
+2026-04-30 22:41:12: OCN_GRID is 1.9x2.5
+ ---------------------------------------------------
+2026-04-30 22:41:12: Component ROF is MOSART: MOdel for Scale Adaptive River Transport
+ ---------------------------------------------------
+2026-04-30 22:41:12: ROF_GRID is r05
+ ---------------------------------------------------
+2026-04-30 22:41:12: Component GLC is cism2 (default, higher-order, can run in parallel):cism ice evolution turned off (this is the standard configuration unless you're explicitly interested in ice evolution):
+ ---------------------------------------------------
+2026-04-30 22:41:12: GLC_GRID is gland4
+ ---------------------------------------------------
+2026-04-30 22:41:12: Component WAV is Stub wave component
+ ---------------------------------------------------
+2026-04-30 22:41:12: WAV_GRID is null
+ ---------------------------------------------------
+2026-04-30 22:41:12: ESP_GRID is None
+ ---------------------------------------------------

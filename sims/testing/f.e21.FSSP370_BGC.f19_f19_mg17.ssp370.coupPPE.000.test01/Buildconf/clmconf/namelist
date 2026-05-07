@@ -1,0 +1,82 @@
+&comp_inparm 
+
+finidat = 'f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000.clm2.r.2015-01-01-00000.nc'
+hist_nhtfrq(1)=0
+
+hist_fexcl1 = 'CWDC_vr','CWDN_vr','LITR1C_vr','LITR1N_vr','LITR2C_vr','LITR2N_vr','LITR3C_vr','LITR3N_vr','SMIN_NH4_vr','SMIN_NO3_vr','SMINN_vr','SOIL1C_vr','SOIL1N_vr','SOIL2C_vr','SOIL2N_vr','SOIL3C_vr','SOIL3N_vr','SOILC_vr','SOILN_vr'
+
+
+
+hist_fincl1 += 'HBOT'
+
+
+
+hist_nhtfrq(2)=0
+
+hist_mfilt(2)=120
+
+hist_dov2xy(2)= .false.
+
+hist_type1d_pertape(2) = 'PFTS'
+
+hist_fincl2 = 'TLAI','TSAI','HBOT','HTOP','GPP','FCTR','FCEV'
+
+
+
+hist_nhtfrq(3)=-24
+
+hist_mfilt(3)=365
+
+
+
+hist_fincl3 = 'EFLX_LH_TOT','FSH_TO_COUPLER','FSH','FIRE','FLDS','FSR','FSDS','FGR'
+
+
+
+hist_fincl3 += 'TV','TSOI','TREFMXAV','TREFMNAV','HUMIDEX','HIA','WBT'
+
+
+
+hist_fincl3 += 'GPP','NPP'
+
+
+
+hist_fincl3 += 'QBOT','RAIN_FROM_ATM','SNOW_FROM_ATM','TBOT','TSA','WIND'
+
+
+
+hist_fincl3 += 'BTRAN2','BTRANMN','GSSHALN','GSSUNLN','PARVEGLN','VEGWPLN','VEGWPPD'
+
+
+
+hist_fincl3 += 'VPD_CAN','SMP','SOILWATER_10CM'
+
+
+
+hist_fincl3 += 'FCEV','FCTR','FGEV'
+
+
+
+hist_fincl3 += 'QOVER','QRUNOFF','TWS'
+
+
+
+hist_fincl3 += 'TLAI','ELAI'
+
+
+
+use_init_interp=.true.
+
+
+
+
+
+
+
+paramfile = "/glade/u/home/bbuchovecky/projects/coup_ppe/pert/paramfiles/coupPPE.000.nc"
+
+
+
+finidat='/glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000.clm2.r.2015-01-01-00000.nc'
+
+/ 

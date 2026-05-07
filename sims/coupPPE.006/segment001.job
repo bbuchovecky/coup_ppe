@@ -21,7 +21,7 @@ fi
 
 
 TDIR="/glade/work/djk2120/ctsm_tether/tools/tether/"
-WDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/sims/${MEM}"
+WDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/sims/${MEM}"
 
 
 if [ ! -d "$WDIR" ]; then

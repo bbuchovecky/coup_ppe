@@ -52,8 +52,7 @@ def combine_years_months(da, freq='MS'):
     months = da.month.values  # shape (M,)
 
     # Build full Y×M time index, then flatten
-    yy, mm = np.meshgrid(years, months, indexing='ij')  # both (Y, M)
-    time_index = xr.date_range(                         # or pd.date_range if using numpy datetimes
+    time_index = xr.date_range(               # or pd.date_range if using numpy datetimes
         start=f'{years[0]}-{months[0]:02d}',
         periods=len(years) * len(months),
         freq=freq,
@@ -186,12 +185,12 @@ def main():
     hadbc_path = '/glade/campaign/cesm/cesmdata/inputdata/atm/cam/sst/sst_HadOIBl_bc_0.9x1.25_1850_2022_c241003.nc'
     hadbc = xr.open_dataset(hadbc_path)
     obs_sst = hadbc.SST_cpl_prediddle.sel(time=OVERLAP_TSLICE).reindex_like(area, tolerance=1e-3, method='nearest')
-    obs_cice = hadbc.ice_cov_prediddle.sel(time=OVERLAP_TSLICE).reindex_like(area, tolerance=1e-3, method='nearest')
+    obs_cice = hadbc.ice_cov_prediddle.sel(time=OVERLAP_TSLICE).reindex_like(area, tolerance=1e-3, method='nearest') * 100
 
     # Load LENS2 member
     branch_year, member_str = LENS2_MEMBER.split("-")
     lens_sst = load_member("SST", branch_year, member_str).where(om) - 273.15
-    lens_cice = load_member("ICEFRAC", branch_year, member_str).where(om)
+    lens_cice = load_member("ICEFRAC", branch_year, member_str).where(om) * 100
 
     # Define overlap timeseries
     lens_sst_overlap = lens_sst.sel(time=OVERLAP_TSLICE)
@@ -215,9 +214,19 @@ def main():
     rp_clim_my =  build_relax_param_clim(rw_clim, lens_cice_overlap_my)
     cice_overlap_my = build_timeseries(lens_cice_overlap_my, obs_cice_my, rp_clim_my).clip(min=0, max=1)
     cice_overlap = combine_years_months(cice_overlap_my)
+
+    # Common attributes
+    attrs = {
+        'method': f'{RELAX_NYEAR}-year cosine-smoothed relaxation over 2015-{2015+RELAX_NYEAR}, transition from HadOI to LENS2 {LENS2_MEMBER}, use prediddled HadOI fields',
+        'HadOI': hadbc_path,
+        'LENS2_path': LENS2_DIR,
+        'LENS2_SST_file': f'b.e21.BHIST{BMB_VERSION}.f09_g17.LE2-{branch_year}.{member_str}.cam.h0.SST.*.nc',
+        'LENS2_ICEFRAC_file': f'b.e21.BHIST{BMB_VERSION}.f09_g17.LE2-{branch_year}.{member_str}.cam.h0.ICEFRAC.*.nc',
+        'history': f'created on {datetime.now().strftime("%m/%d/%y %H:%M:%S")}',
+    }
     
     # Concatenate into single timeseries from 2015-2100
-    sst = (
+    (
         xr.concat(
             [
                 sst_overlap,
@@ -227,16 +236,19 @@ def main():
         )
         .assign_coords(time=lens_sst.time)
         .pipe(fill_nans_with_zonal_mean)
-        .rename('SST_cpl_prediddle')
+        .rename('SST')
         .assign_attrs(
             {
-                'long_name': 'SST before time diddling',
+                'long_name': 'sea surface temperature',
                 'units': 'deg_C',
             }
         )
+        .to_dataset()
+        .assign_attrs(attrs)
+        .to_netcdf(f'{OUT_DIR}/sst_prediddle_{RELAX_NYEAR}yr_clim_relax.f09_g17.HadOIBl_c241003.LE2_{branch_year}_{member_str}.nc')
     )
 
-    cice = (
+    (
         xr.concat(
             [
                 cice_overlap,
@@ -247,29 +259,16 @@ def main():
         .assign_coords(time=lens_cice.time)
         .pipe(fill_nans_with_zonal_mean)
         .clip(min=0, max=1)
-        .rename('ice_cov_prediddle')
+        .rename('SEAICE')
         .assign_attrs(
             {
-                'long_name': 'Sea-ice concentration before time diddling',
+                'long_name': 'sea-ice concentration',
                 'units': 'fraction',
             }
         )
-    )
-
-    # Merge, add attributes, and save to NetCDF
-    (
-        xr.merge([sst, cice], combine_attrs='drop')
-        .assign_attrs(
-            {
-                'method': f'2-year cosine-smoothed relaxation over 2015-2017, transition from HadOI to LENS2 {LENS2_MEMBER}, use prediddled HadOI fields',
-                'HadOI': hadbc_path,
-                'LENS2_path': LENS2_DIR,
-                'LENS2_SST_file': f'b.e21.BHIST{BMB_VERSION}.f09_g17.LE2-{branch_year}.{member_str}.cam.h0.SST.*.nc',
-                'LENS2_ICEFRAC_file': f'b.e21.BHIST{BMB_VERSION}.f09_g17.LE2-{branch_year}.{member_str}.cam.h0.ICEFRAC.*.nc',
-                'history': f'created on {datetime.now().strftime("%m/%d/%y %H:%M:%S")}',
-            }
-        )
-        .to_netcdf(f'{OUT_DIR}/sst_bc_prediddle_{RELAX_NYEAR}yr_transition_clim.f09_g17.HadOIBl.LE2-{branch_year}.{member_str}.nc')
+        .to_dataset()
+        .assign_attrs(attrs)
+        .to_netcdf(f'{OUT_DIR}/ice_prediddle_{RELAX_NYEAR}yr_clim_relax.f09_g17.HadOIBl_c241003.LE2_{branch_year}_{member_str}.nc')
     )
 
     xclim.close_dask_cluster(client_cluster)

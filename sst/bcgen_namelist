@@ -1,0 +1,18 @@
+ &cntlvars
+ mon1 = 1
+ iyr1 = 2015
+ monn = 12
+ iyrn = 2100
+ mon1rd = 1
+ iyr1rd = 2015
+ monnrd = 12
+ iyrnrd = 2100
+ mon1clm = 1
+ iyr1clm = 2015
+ monnclm = 12
+ iyrnclm = 2035
+ mon1out = 1
+ iyr1out = 2015
+ monnout = 12
+ iyrnout = 2100
+ /

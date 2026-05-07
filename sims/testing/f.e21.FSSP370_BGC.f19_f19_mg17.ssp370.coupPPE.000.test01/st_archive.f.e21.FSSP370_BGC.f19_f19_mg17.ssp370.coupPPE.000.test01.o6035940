@@ -1,0 +1,71 @@
+/glade/u/home/bbuchovecky/.bashrc: line 45: bind: warning: line editing not enabled
+/glade/u/home/bbuchovecky/.bashrc: line 45: bind: warning: line editing not enabled
+st_archive starting
+moving /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/rof.log.6035939.desched1.260502-002455.gz to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/logs/rof.log.6035939.desched1.260502-002455.gz
+moving /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/cpl.log.6035939.desched1.260502-002455.gz to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/logs/cpl.log.6035939.desched1.260502-002455.gz
+moving /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/glc.log.6035939.desched1.260502-002455.gz to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/logs/glc.log.6035939.desched1.260502-002455.gz
+moving /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/atm.log.6035939.desched1.260502-002455.gz to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/logs/atm.log.6035939.desched1.260502-002455.gz
+moving /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/lnd.log.6035939.desched1.260502-002455.gz to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/logs/lnd.log.6035939.desched1.260502-002455.gz
+moving /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/ocn.log.6035939.desched1.260502-002455.gz to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/logs/ocn.log.6035939.desched1.260502-002455.gz
+moving /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/cesm.log.6035939.desched1.260502-002455.gz to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/logs/cesm.log.6035939.desched1.260502-002455.gz
+moving /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/ice.log.6035939.desched1.260502-002455.gz to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/logs/ice.log.6035939.desched1.260502-002455.gz
+-------------------------------------------
+Archiving restarts for date date(2015, 1, 2, 0, 0, 0)
+-------------------------------------------
+Archiving restarts for cam (atm)
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.r.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.r.2015-01-02-00000.nc
+Copying /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.h2.2015-01-01-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.h2.2015-01-01-00000.nc
+ WARNING: ncdump -v nhfil /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.rh1.2015-01-02-00000.nc  failed rc=1
+    out=
+    err=ncdump: nhfil: No such variable
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.rh1.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.rh1.2015-01-02-00000.nc
+ WARNING: ncdump -v nhfil /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.rh0.2015-01-02-00000.nc  failed rc=1
+    out=
+    err=ncdump: nhfil: No such variable
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.rh0.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.rh0.2015-01-02-00000.nc
+ WARNING: ncdump -v nhfil /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.rs.2015-01-02-00000.nc  failed rc=1
+    out=
+    err=ncdump: nhfil: No such variable
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.rs.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.rs.2015-01-02-00000.nc
+Archiving restarts for clm (lnd)
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.r.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.r.2015-01-02-00000.nc
+Copying /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.h2.2015-01-01-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.h2.2015-01-01-00000.nc
+ WARNING: ncdump -v locfnh /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.rh0.2015-01-02-00000.nc  failed rc=1
+    out=
+    err=ncdump: locfnh: No such variable
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.rh0.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.rh0.2015-01-02-00000.nc
+ WARNING: ncdump -v locfnh /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.rh1.2015-01-02-00000.nc  failed rc=1
+    out=
+    err=ncdump: locfnh: No such variable
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.rh1.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.rh1.2015-01-02-00000.nc
+ WARNING: ncdump -v locfnh /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.rh2.2015-01-02-00000.nc  failed rc=1
+    out=
+    err=ncdump: locfnh: No such variable
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.rh2.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.rh2.2015-01-02-00000.nc
+Archiving restarts for cice (ice)
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cice.r.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cice.r.2015-01-02-00000.nc
+Archiving restarts for docn (ocn)
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.docn.rs1.2015-01-02-00000.bin to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.docn.rs1.2015-01-02-00000.bin
+Archiving restarts for mosart (rof)
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.mosart.r.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.mosart.r.2015-01-02-00000.nc
+ WARNING: ncdump -v locfnh /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.mosart.rh0.2015-01-02-00000.nc  failed rc=1
+    out=
+    err=ncdump: locfnh: No such variable
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.mosart.rh0.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.mosart.rh0.2015-01-02-00000.nc
+Archiving restarts for cism (glc)
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cism.r.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cism.r.2015-01-02-00000.nc
+Archiving restarts for drv (cpl)
+copying file /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cpl.r.2015-01-02-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/rest/2015-01-02-00000/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cpl.r.2015-01-02-00000.nc
+Archiving restarts for dart (esp)
+Archiving history files for cam (atm)
+copying /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.h2.2015-01-01-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/atm/hist/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cam.h2.2015-01-01-00000.nc 
+Archiving history files for clm (lnd)
+copying /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.h2.2015-01-01-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/lnd/hist/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.clm2.h2.2015-01-01-00000.nc 
+Archiving history files for cice (ice)
+Archiving history files for docn (ocn)
+Archiving history files for mosart (rof)
+Archiving history files for cism (glc)
+moving /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cism.initial_hist.2015-01-01-00000.nc to /glade/derecho/scratch/bbuchovecky/archive/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/glc/hist/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01.cism.initial_hist.2015-01-01-00000.nc 
+Archiving history files for drv (cpl)
+Archiving history files for dart (esp)
+st_archive completed

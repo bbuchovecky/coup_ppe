@@ -4,12 +4,12 @@ MEM=$1
 CASENAME="I1850Clm50Bgc.CPLHIST.historical.${MEM}.AD"
 PROJECT=UWAS0155
 
-SDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts"
-WDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/sims/${MEM}"
-NAMELISTS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts/namelists"
-NAMELISTMODS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/nlmods"
-PARAMFILES="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/paramfiles"
-SOURCEMODS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/srcmods/perturbed"
+SDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts"
+WDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/sims/${MEM}"
+NAMELISTS="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts/namelists"
+NAMELISTMODS="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/nlmods"
+PARAMFILES="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/paramfiles"
+SOURCEMODS="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/srcmods/perturbed"
 
 COMPSET=1850_DATM%CPLHIST_CLM50%BGC-CROP_SICE_SOCN_MOSART_CISM2%NOEVOLVE_SWAV
 GRID=f19_f19_mg17

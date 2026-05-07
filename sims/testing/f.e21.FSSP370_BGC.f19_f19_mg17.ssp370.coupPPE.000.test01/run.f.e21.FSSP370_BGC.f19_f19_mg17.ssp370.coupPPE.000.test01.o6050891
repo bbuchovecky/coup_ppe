@@ -1,0 +1,40 @@
+/glade/u/home/bbuchovecky/.bashrc: line 45: bind: warning: line editing not enabled
+/glade/u/home/bbuchovecky/.bashrc: line 45: bind: warning: line editing not enabled
+Generating namelists for /glade/u/home/bbuchovecky/projects/coup_ppe/sims/testing/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01
+ - Prestaging REFCASE (/glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000) to /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run
+Copy rpointer /glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000/rpointer.ocn
+Copy rpointer /glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000/rpointer.atm
+Copy rpointer /glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000/rpointer.rof
+Copy rpointer /glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000/rpointer.ocn.tavg.5
+Copy rpointer /glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000/rpointer.drv
+Copy rpointer /glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000/rpointer.glc
+Copy rpointer /glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000/rpointer.lnd
+Copy rpointer /glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000/rpointer.ice
+Copy rpointer /glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000/rpointer.ocn.restart
+Copy rpointer /glade/derecho/scratch/bbuchovecky/archive/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.000/rest/2015-01-01-00000/rpointer.ocn.ovf
+Creating component namelists
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/components/cam//cime_config/buildnml
+CAM namelist copy: file1 /glade/u/home/bbuchovecky/projects/coup_ppe/sims/testing/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/Buildconf/camconf/atm_in file2 /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run/atm_in 
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/components/clm//cime_config/buildnml
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/components/cice//cime_config/buildnml
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/cime/src/components/data_comps/docn/cime_config/buildnml
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/components/mosart//cime_config/buildnml
+   Running /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/components/cism//cime_config/buildnml 
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/cime/src/components/stub_comps/swav/cime_config/buildnml
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/cime/src/components/stub_comps/sesp/cime_config/buildnml
+   Calling /glade/u/home/bbuchovecky/cesm_source/cesm2.1.5/cime/src/drivers/mct/cime_config/buildnml
+   NOTE: ignoring setting of rof2ocn_ice_rmapname=idmap in seq_maps.rc
+   NOTE: ignoring setting of rof2ocn_liq_rmapname=idmap in seq_maps.rc
+Finished creating component namelists
+-------------------------------------------------------------------------
+ - Prestage required restarts into /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run
+ - Case input data directory (DIN_LOC_ROOT) is /glade/campaign/cesm/cesmdata/inputdata 
+ - Checking for required input datasets in DIN_LOC_ROOT
+-------------------------------------------------------------------------
+2026-05-03 23:59:54 MODEL EXECUTION BEGINS HERE
+run command is mpiexec  --label  --line-buffer  -n 256 /glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/bld/cesm.exe  >> cesm.log.$LID 2>&1  
+2026-05-04 01:28:14 MODEL EXECUTION HAS FINISHED
+check for resubmit
+dout_s True 
+mach derecho 
+resubmit_num 0

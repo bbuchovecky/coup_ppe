@@ -1,16 +1,19 @@
 #!/bin/bash
 
+set -e  # exit on first error
+# set -u  # exit if undefined variable is used
+
 MEM=$1
 CASENAME="IHistClm50Bgc.CPLHIST.historical.${MEM}.IHIST"
 PROJECT=UWAS0155
 
-SDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts"
-WDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/sims/${MEM}"
+SDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts"
+WDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/sims/${MEM}"
 ARCHIVE="/glade/derecho/scratch/bbuchovecky/archive"
-NAMELISTS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts/namelists"
-NAMELISTMODS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/nlmods"
-PARAMFILES="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/paramfiles"
-SOURCEMODS="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert/srcmods/perturbed"
+NAMELISTS="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts/namelists"
+NAMELISTMODS="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/nlmods"
+PARAMFILES="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/paramfiles"
+SOURCEMODS="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/srcmods/perturbed"
 
 COMPSET=HIST_DATM%CPLHIST_CLM50%BGC-CROP_SICE_SOCN_MOSART_CISM2%NOEVOLVE_SWAV
 GRID=f19_f19_mg17

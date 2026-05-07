@@ -1,0 +1,3 @@
+domain1 = /glade/campaign/cesm/cesmdata/inputdata/atm/cam/ocnfrac/domain.camocn.1.9x2.5_gx1v6_090403.nc
+file1 = /glade/campaign/univ/uwas0155/ppe/docn_sst/sstice_bc_diddle_1yr_clim_relax.f19_g17.HadOIBl_c241003.LE2_1231_005_ts.nc
+domainfile = /glade/campaign/cesm/cesmdata/inputdata/share/domains/domain.ocn.fv1.9x2.5_gx1v7.181205.nc

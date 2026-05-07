@@ -97,7 +97,7 @@ print(client)
 print(cluster.workers)
 
 
-SIM_DIR = "/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/sims"
+SIM_DIR = "/glade/u/home/bbuchovecky/projects/coup_ppe/sims"
 ARCH_DIR = "/glade/derecho/scratch/bbuchovecky/archive"
 VARIABLES = [
     "TLAI", "TOTECOSYSC", "TOTVEGC", "TOTSOMC",                    # vegetation and carbon
@@ -133,7 +133,7 @@ labels = {
 
 for im in [1, 2]:
     MEM = f"coupPPE.{str(im).zfill(3)}"
-    WDIR = f"/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/sims/{MEM}"
+    WDIR = f"/glade/u/home/bbuchovecky/projects/coup_ppe/sims/{MEM}"
 
     ihist = load_variables(VARIABLES, f"IHistClm50Bgc.CPLHIST.historical.{MEM}.IHIST", ARCH_DIR)
 

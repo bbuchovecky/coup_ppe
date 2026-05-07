@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<file id="stream" version="1.0">
+<dataSource>
+   GENERIC
+</dataSource>
+<domainInfo>
+  <variableNames>
+     time    time
+        xc      lon
+        yc      lat
+        area    area
+        mask    mask
+  </variableNames>
+  <filePath>
+     /glade/campaign/cesm/cesmdata/inputdata/atm/cam/ocnfrac
+  </filePath>
+  <fileNames>
+     domain.camocn.1.9x2.5_gx1v6_090403.nc 
+  </fileNames>
+</domainInfo>
+<fieldInfo>
+   <variableNames>
+     SST_cpl t
+   </variableNames>
+   <filePath>
+     /glade/campaign/univ/uwas0155/ppe/docn_sst
+   </filePath>
+   <fileNames>
+    sstice_bc_diddle_1yr_clim_relax.f19_g17.HadOIBl_c241003.LE2_1231_005_ts.nc
+   </fileNames>
+   <offset>
+      0
+   </offset>
+</fieldInfo>
+</file>

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SRCDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/hist/data/cesm2.1.5"
-DESTDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/pert"
+SRCDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/hist/data/cesm2.1.5"
+DESTDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/pert"
 
 cp -r $SRCDIR/* $DESTDIR/
 cd $DESTDIR

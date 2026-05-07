@@ -1,8 +1,8 @@
 #!/bin/bash
 
 MEM=$1
-SDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/scripts"
-WDIR="/glade/u/home/bbuchovecky/projects/cpl_ppe_co2/sims/${MEM}"
+SDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts"
+WDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/sims/${MEM}"
 case=$(<case.txt)
 
 python "${SDIR}/spinup_stability.py" PAD.yml

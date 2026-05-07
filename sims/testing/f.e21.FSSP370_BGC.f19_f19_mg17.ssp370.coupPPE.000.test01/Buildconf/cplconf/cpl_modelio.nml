@@ -1,0 +1,13 @@
+&modelio
+  diri = "/glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/bld/cpl"
+  diro = "/glade/derecho/scratch/bbuchovecky/f.e21.FSSP370_BGC.f19_f19_mg17.ssp370.coupPPE.000.test01/run"
+  logfile = "cpl.log.6050891.desched1.260503-235947"
+/
+&pio_inparm
+  pio_netcdf_format = "64bit_offset"
+  pio_numiotasks = -99
+  pio_rearranger = 1
+  pio_root = 1
+  pio_stride = 128
+  pio_typename = "pnetcdf"
+/

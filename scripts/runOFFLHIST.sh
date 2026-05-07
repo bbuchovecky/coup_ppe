@@ -1,11 +1,14 @@
 #!/bin/bash
 
+set -u  # exit if undefined variable is used
+
 MEM=$1
 CASENAME="i.e21.CPLHIST_BGC.f19_f19_mg17.historical.${MEM}"
 PROJECT=UWAS0155
 
 WDIR="/glade/u/home/bbuchovecky/projects/coup_ppe/sims/${MEM}"
 NAMELISTS="/glade/u/home/bbuchovecky/projects/coup_ppe/scripts/namelists"
+NAMELISTMODS="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/nlmods"  # BGB: fixed 04/30/26, only maximum_leaf_wetted_fraction is affected
 PARAMFILES="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/paramfiles"
 SOURCEMODS="/glade/u/home/bbuchovecky/projects/coup_ppe/pert/srcmods/perturbed"
 

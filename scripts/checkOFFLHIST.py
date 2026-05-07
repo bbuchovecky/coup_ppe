@@ -109,8 +109,14 @@ def load_variables(
     if chunks is None:
         chunks = {"time": -1}
 
+    # Deal with 005 and 006
+    dir_case = case
+    file_case = case[:-9] if case[-8:] == "no_nlmod" else case
+
+    print(f"{basedir}/{dir_case}{suffix}/{domain}/hist/{file_case}.{component[domain]}.{htape}.*.nc")
+
     data = xr.open_mfdataset(
-        f"{basedir}/{case}{suffix}/{domain}/hist/{case}.{component[domain]}.{htape}.*.nc",
+        f"{basedir}/{dir_case}{suffix}/{domain}/hist/{file_case}.{component[domain]}.{htape}.*.nc",
         combine="by_coords",
         chunks=chunks,
         decode_timedelta=False,
@@ -349,6 +355,10 @@ def main(argv=None):
     MAP_YEAR_RANGE = [args.map_start, args.map_end]
 
     chunks = {"time": args.time_chunk}
+
+    # Deal with 005 and 006 (for now)
+    if CASE in ("coupPPE.005", "coupPPE.006"):
+        CASE += ".no_nlmod"
 
     print(f"CASE = {CASE}")
     print(f"CASE_PREFIX = {CASE_PREFIX}")
