@@ -335,7 +335,12 @@ def parse_args(argv=None):
     parser.add_argument(
         "--show",
         action="store_true",
-        help="Show plots instead of saving PNG files.",
+        help="Show plots instead of saving PNG files (default: off).",
+    )
+    parser.add_argument(
+        "--no-nlmod",
+        action="store_true",
+        help="Select the 'no_nlmod' cases for 005 and 006 (default: off).",
     )
     return parser.parse_args(argv)
 
@@ -357,7 +362,7 @@ def main(argv=None):
     chunks = {"time": args.time_chunk}
 
     # Deal with 005 and 006 (for now)
-    if CASE in ("coupPPE.005", "coupPPE.006"):
+    if (args.no_nlmod) and (CASE in ("coupPPE.005", "coupPPE.006")):
         CASE += ".no_nlmod"
 
     print(f"CASE = {CASE}")
@@ -402,36 +407,36 @@ def main(argv=None):
 
     ConversionFactor = namedtuple("ConversionFactor", ["cf", "cs", "unit", "kind"])
     # cf : multiplicative conversion factor (lw for intensive, la/1e15 for PgC extensive)
-    # cs : additive constant (e.g., -273.15 K→°C for temperature variables)
+    # cs : additive conversion scalar (e.g., -273.15 K->deg_C for temperature variables)
     cfs = {
-        "TLAI":       ConversionFactor(lw,          0,       "m2/m2",    "intensive"),
-        "TOTECOSYSC": ConversionFactor(la / 1e15,   0,       "PgC",      "extensive"),
-        "TOTVEGC":    ConversionFactor(la / 1e15,   0,       "PgC",      "extensive"),
-        "TOTSOMC":    ConversionFactor(la / 1e15,   0,       "PgC",      "extensive"),
-        "RAIN":       ConversionFactor(lw,          0,       "mm/s",     "intensive"),
-        "QRUNOFF":    ConversionFactor(lw,          0,       "mm/s",     "intensive"),
-        "QSOIL":      ConversionFactor(lw,          0,       "mm/s",     "intensive"),
-        "QVEGE":      ConversionFactor(lw,          0,       "mm/s",     "intensive"),
-        "QVEGT":      ConversionFactor(lw,          0,       "mm/s",     "intensive"),
-        "TWS":        ConversionFactor(lw,          0,       "mm",       "intensive"),
-        "EFLX_LH_TOT":ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "FCTR":       ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "FCEV":       ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "FGEV":       ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "FSH":        ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "FIRE":       ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "FLDS":       ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "FSR":        ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "FSDS":       ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "FGR":        ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "TSA":        ConversionFactor(lw,          -273.15, "degreeC",  "intensive"),
-        "TREFHT":     ConversionFactor(lw,          -273.15, "degreeC",  "intensive"),
-        "PS":         ConversionFactor(lw,          0,       "Pa",       "intensive"),
-        "FSNT":       ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "FLNT":       ConversionFactor(lw,          0,       "W/m2",     "intensive"),
-        "CLDTOT":     ConversionFactor(lw,          0,       "fraction", "intensive"),
-        "PRECT":      ConversionFactor(lw*1000*86400, 0,     "mm/day",   "intensive"),
-        "TMQ":        ConversionFactor(lw,          0,       "kg/m2",    "intensive"),
+        "TLAI":        ConversionFactor(lw,            0,       "m2/m2",    "intensive"),
+        "TOTECOSYSC":  ConversionFactor(la / 1e15,     0,       "PgC",      "extensive"),
+        "TOTVEGC":     ConversionFactor(la / 1e15,     0,       "PgC",      "extensive"),
+        "TOTSOMC":     ConversionFactor(la / 1e15,     0,       "PgC",      "extensive"),
+        "RAIN":        ConversionFactor(lw,            0,       "mm/s",     "intensive"),
+        "QRUNOFF":     ConversionFactor(lw,            0,       "mm/s",     "intensive"),
+        "QSOIL":       ConversionFactor(lw,            0,       "mm/s",     "intensive"),
+        "QVEGE":       ConversionFactor(lw,            0,       "mm/s",     "intensive"),
+        "QVEGT":       ConversionFactor(lw,            0,       "mm/s",     "intensive"),
+        "TWS":         ConversionFactor(lw,            0,       "mm",       "intensive"),
+        "EFLX_LH_TOT": ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "FCTR":        ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "FCEV":        ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "FGEV":        ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "FSH":         ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "FIRE":        ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "FLDS":        ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "FSR":         ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "FSDS":        ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "FGR":         ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "TSA":         ConversionFactor(lw,            -273.15, "degreeC",  "intensive"),
+        "TREFHT":      ConversionFactor(lw,            -273.15, "degreeC",  "intensive"),
+        "PS":          ConversionFactor(lw,            0,       "Pa",       "intensive"),
+        "FSNT":        ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "FLNT":        ConversionFactor(lw,            0,       "W/m2",     "intensive"),
+        "CLDTOT":      ConversionFactor(lw,            0,       "fraction", "intensive"),
+        "PRECT":       ConversionFactor(lw*1000*86400, 0,       "mm/day",   "intensive"),
+        "TMQ":         ConversionFactor(lw,            0,       "kg/m2",    "intensive"),
     }
 
     labels = {

@@ -1,3 +1,5 @@
+#!/glade/work/bbuchovecky/miniforge3/envs/data-sci-py312/bin/python3.12
+
 import os
 import sys
 from glob import glob
@@ -131,7 +133,7 @@ labels = {
     "extensive": "total"
 }
 
-for im in [1, 2]:
+for im in [5, 6]:
     MEM = f"coupPPE.{str(im).zfill(3)}"
     WDIR = f"/glade/u/home/bbuchovecky/projects/coup_ppe/sims/{MEM}"
 
