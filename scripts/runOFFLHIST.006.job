@@ -1,0 +1,13 @@
+#!/bin/bash
+#PBS -N job_runOFFLHIST.006
+#PBS -q develop
+#PBS -l walltime=1:00:00
+#PBS -A UWAS0155
+#PBS -k eod
+#PBS -l select=1:ncpus=5
+#PBS -o job_files/
+
+# ---------------------------------------------------------
+
+
+./runOFFLHIST.sh coupPPE.006

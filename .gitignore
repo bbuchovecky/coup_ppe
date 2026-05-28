@@ -5,6 +5,7 @@ sims/coupPPE.[0-9][0-9][0-9]/**/*.[eo]*
 sims/coupPPE.cplhist/*/
 sims/coupPPE.cplhist.FUNbug/*/
 sims/testing/coupPPE.test.[0-9][0-9][0-9]/*/
+*.[eo]*
 
 # Dask workers
 dask-worker*
