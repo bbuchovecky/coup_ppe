@@ -1,4 +1,4 @@
-# cpl_ppe_co2
+# coup_ppe
 
 Code and documentation for coupled CESM2.1.5 PPE under transient historical and SSP3-7.0 forcing.
 
