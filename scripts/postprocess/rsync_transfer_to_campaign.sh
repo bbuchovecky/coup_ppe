@@ -31,9 +31,9 @@ fi
 
 
 # MEMBERS=(000)
-MEMBERS=(001 002 003 004 005 006 007 008 009 010 011 012 013 014 015 016 017 018 019 020 021 022 023 024 025 026 027 028)
+# MEMBERS=(001 002 003 004 005 006 007 008 009 010 011 012 013 014 015 016 017 018 019 020 021 022 023 024 025 026 027 028)
 
-# MEMBERS=(005 006)
+MEMBERS=(005 006)
 
 
 
@@ -50,6 +50,7 @@ if [ "$DO" == "FHIST" ]; then
         
         if [ "$DRY_RUN" = "true" ]; then
             echo "[DRY RUN] mkdir -p /glade/campaign/univ/uwas0155/ppe/historical/coupled_simulations/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.${MEM}"
+            echo "[DRY RUN] rsync FHIST data from: /glade/derecho/scratch/bbuchovecky/archive/./f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.${MEM}"
             echo "[DRY RUN] rsync FHIST data to: /glade/campaign/univ/uwas0155/ppe/historical/coupled_simulations"
         else
             mkdir -p /glade/campaign/univ/uwas0155/ppe/historical/coupled_simulations/f.e21.FHIST_BGC.f19_f19_mg17.historical.coupPPE.${MEM}
@@ -79,6 +80,7 @@ elif [ "$DO" == "OFFLHIST" ]; then
         
         if [ "$DRY_RUN" = "true" ]; then
             echo "[DRY RUN] mkdir -p /glade/campaign/univ/uwas0155/ppe/historical/offline_simulations/i.e21.CPLHIST_BGC.f19_f19_mg17.historical.coupPPE.${MEM}"
+            echo "[DRY RUN] rsync OFFLHIST data from: /glade/derecho/scratch/bbuchovecky/archive/./i.e21.CPLHIST_BGC.f19_f19_mg17.historical.coupPPE.${MEM}"
             echo "[DRY RUN] rsync OFFLHIST data to: /glade/campaign/univ/uwas0155/ppe/historical/offline_simulations/"
         else
             mkdir -p /glade/campaign/univ/uwas0155/ppe/historical/offline_simulations/i.e21.CPLHIST_BGC.f19_f19_mg17.historical.coupPPE.${MEM}
@@ -107,10 +109,11 @@ elif [ "$DO" == "IHIST" ]; then
         echo "coupPPE.${MEM}"
         
         if [ "$DRY_RUN" = "true" ]; then
-            echo "[DRY RUN] mkdir -p /glade/campaign/univ/uwas0155/ppe/historical/spinup_simulations/IHistClm50Bgc.CPLHIST.historical.coupPPE.${MEM}"
+            echo "[DRY RUN] mkdir -p /glade/campaign/univ/uwas0155/ppe/historical/spinup_simulations/IHistClm50Bgc.CPLHIST.historical.coupPPE.${MEM}.IHIST"
+            echo "[DRY RUN] rsync IHIST data from: /glade/derecho/scratch/bbuchovecky/archive/./IHistClm50Bgc.CPLHIST.historical.coupPPE.${MEM}.IHIST/"
             echo "[DRY RUN] rsync IHIST data to: /glade/campaign/univ/uwas0155/ppe/historical/spinup_simulations/"
         else
-            mkdir -p /glade/campaign/univ/uwas0155/ppe/historical/spinup_simulations/IHistClm50Bgc.CPLHIST.historical.coupPPE.${MEM}
+            mkdir -p /glade/campaign/univ/uwas0155/ppe/historical/spinup_simulations/IHistClm50Bgc.CPLHIST.historical.coupPPE.${MEM}.IHIST
 
             rsync -a --info=progress2 \
                 --relative \
