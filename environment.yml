@@ -1,4 +1,4 @@
-name: cpl_ppe_co2
+name: coup-ppe
 channels:
   - conda-forge
 dependencies:
@@ -20,4 +20,5 @@ dependencies:
   - certifi
   - openssl
   - dask-jobqueue
-prefix: /glade/u/home/bbuchovecky/miniforge3/envs/cpl_ppe_co2
+  - zarr
+prefix: /glade/u/home/bbuchovecky/miniforge3/envs/coup-ppe
