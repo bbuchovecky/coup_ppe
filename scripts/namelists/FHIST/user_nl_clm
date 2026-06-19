@@ -32,11 +32,14 @@ hist_fincl3 += 'QBOT','RAIN_FROM_ATM','SNOW_FROM_ATM','TBOT','TSA','WIND','PBOT'
 ! Plant hydraulics
 hist_fincl3 += 'BTRAN2','BTRANMN','GSSHALN','GSSUNLN','PARVEGLN','VEGWPLN','VEGWPPD'
 
-! Moisture (added TOTSOILLIQ for all future runs only)
-hist_fincl3 += 'VPD_CAN','SMP','SOILWATER_10CM','TOTSOILLIQ'
+! Moisture (added TOTSOILLIQ and TOTSOILICE for all future runs only)
+hist_fincl3 += 'VPD_CAN','SMP','SOILWATER_10CM','TOTSOILLIQ','TOTSOILICE'
 
-! Vertically-resolved soil moisture (added for all future runs only)
-hist_fincl3 += 'SOILLIQ'
+! Vertically-resolved soil water liquid and ice (added for all future runs only)
+hist_fincl3 += 'SOILLIQ','SOILICE'
+
+! Snow variables (masking purposes for all future runs only)
+hist_fincl3 += 'FSNO','H2OSNO'
 
 ! ET partitioning
 hist_fincl3 += 'FCEV','FCTR','FGEV'
